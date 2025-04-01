@@ -56,7 +56,6 @@ htmlcov/
 # Bayesian inference specific
 *.stan
 *.cmdstan
-*.csv
 *.tsv
 *.arviz
 *.h5
@@ -66,3 +65,6 @@ htmlcov/
 .vscode/
 .idea/
 *.iml
+
+# data file
+data/
