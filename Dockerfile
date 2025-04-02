@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y \
 RUN pip install --upgrade pip
 
 # Instalar PyMC y dependencias necesarias
-RUN pip install pymc3 numpy pandas matplotlib seaborn arviz[all] jupyter
+RUN pip install pymc3 numpy pandas matplotlib seaborn arviz[all] jupyter scikit-survival
 
 # Establecer el directorio de trabajo
 WORKDIR /app
