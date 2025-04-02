@@ -68,3 +68,4 @@ htmlcov/
 
 # data file
 data/
+.DS_Store
