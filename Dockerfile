@@ -9,13 +9,21 @@ RUN apt-get update && apt-get install -y \
     python3-dev \
     libatlas-base-dev \
     libhdf5-dev \
-    gfortran
+    gfortran \
+    r-base \
+    r-base-dev \
+    libcurl4-openssl-dev \
+    libxml2-dev \
+    libssl-dev
 
 # Actualizar pip
 RUN pip install --upgrade pip
 
 # Instalar PyMC y dependencias necesarias
-RUN pip install pymc3 numpy pandas matplotlib seaborn arviz[all] jupyter scikit-survival
+RUN pip install pymc3 numpy pandas matplotlib seaborn arviz[all] jupyter scikit-survival rpy2
+
+# Instalar paquetes de R esenciales
+RUN R -e "install.packages(c('tidyverse', 'ggplot2', 'data.table', 'rstan', 'lme4'), repos='http://cran.r-project.org')"
 
 # Establecer el directorio de trabajo
 WORKDIR /app
