@@ -1,21 +1,6 @@
 ## Author: Christian Badillo
 ## Fecha: 2025-04-02
-## Modelo de Riesgos proporcionales para datos de Covid-19 en México en el año del 2022 usando
-## estimación bayesiana.
-
-# librerias
-library(cmdstanr)
-library(posterior)
-library(bayesplot)
-color_scheme_set("brightblue")
-
-fit <- mod$sample(
-    data = data_list,
-    seed = 123,
-    chains = 4,
-    parallel_chains = 4,
-    refresh = 500 # print update every 500 iters
-)
+## Modelo de Riesgos proporcionales para datos de Covid-19 en México en el año del 2022.
 
 library(survival)
 library(survminer)
@@ -23,12 +8,6 @@ library(ranger)
 library(ggplot2)
 library(dplyr)
 library(ggfortify)
-
-# Setup
-
-options(mc.cores = parallel::detectCores())
-rstan_options(auto_write = TRUE)
-#rstan_options(threads_per_chain = 1)
 
 # --------------------------------------------------------------
 # Preparación de Datos
