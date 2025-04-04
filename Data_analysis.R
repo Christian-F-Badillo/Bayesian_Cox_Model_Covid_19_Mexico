@@ -4,7 +4,19 @@
 ## estimación bayesiana.
 
 # librerias
-library(rstan)
+library(cmdstanr)
+library(posterior)
+library(bayesplot)
+color_scheme_set("brightblue")
+
+fit <- mod$sample(
+    data = data_list,
+    seed = 123,
+    chains = 4,
+    parallel_chains = 4,
+    refresh = 500 # print update every 500 iters
+)
+
 library(survival)
 library(survminer)
 library(ranger)
