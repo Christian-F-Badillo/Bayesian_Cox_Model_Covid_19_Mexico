@@ -27,8 +27,19 @@ var/
 pip-log.txt
 pip-delete-this-directory.txt
 
+# Archivos compilados de Stan
+*.hpp
+*.o
+*.exe
+*.mod
+*.so
+*.dSYM/
+*.out
+exp_model
+
 # Virtual environments
 venv/
+bayes-env/
 ENV/
 env/
 .venv/
