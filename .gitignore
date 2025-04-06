@@ -35,8 +35,8 @@ pip-delete-this-directory.txt
 *.so
 *.dSYM/
 *.out
+propo_hazard
 exp_model
-
 # Virtual environments
 venv/
 bayes-env/
