@@ -47,6 +47,8 @@ env/
 env.bak/
 venv.bak/
 
+*.rds
+
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints
 
