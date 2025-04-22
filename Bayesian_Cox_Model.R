@@ -5,6 +5,12 @@ library(cmdstanr)
 library(posterior)
 options(mc.cores = parallel::detectCores())
 
+cmdstan_path()
+# Debes ser "C:/Users/crish/.cmdstan/cmdstan-2.36.0"
+
+# cmdstan version
+cmdstan_version()
+
 # Survival analysis
 library(survival)
 
@@ -121,9 +127,7 @@ model {
 }
 
 generated quantities {
-  vector[N] log_lik;             
-  array[N] real y_rep;           // Declarar como arreglo de reales
-  vector[N] surv_prob;           
+  vector[N] log_lik;  // Log-verosimilitud
 
   // Convertir 'event' a vector
   vector[N] event_vec = to_vector(event);
@@ -136,19 +140,6 @@ generated quantities {
 
   // Log-verosimilitud
   log_lik = event_vec .* (log_rate - rate_time) + event_comp .* (-rate_time);
-
-  for (n in 1:N) {
-  real y_tmp = exponential_rng(1 / rate[n]);  // tiempo simulado
-  // Aplico censura como en los datos reales:
-  if (event[n] == 0 && y_tmp > time[n]) {
-    y_rep[n] = time[n];  // censurado
-  } else {
-    y_rep[n] = y_tmp;  // evento observado
-  }
-}
-
-  // Probabilidad de supervivencia (vector)
-  surv_prob = exp(-rate_time);
 }
 ", 
     file = "exp_PH_model.stan"
@@ -167,9 +158,7 @@ stan_data <- list(
 
 # Definimos el modelo
 exp_PH_model <- cmdstan_model("exp_PH_model.stan")
-
-cmdstan_path() # Para checar que se instalo
-cmdstan_version()
+exp_PH_model$print(line_numbers = TRUE)
 
 # Ajustamos el modelo
 fit_bayes <- exp_PH_model$sample(
@@ -187,6 +176,22 @@ fit_bayes <- exp_PH_model$sample(
 # Guardamos el modelo
 fit_bayes$save_object(file = "exp_PH_model_draws.rds")
 
+# Abrimos el modelo
+fit_bayes <- readRDS("exp_PH_model_draws.rds")
+
+# Diagnóstico
+fit_bayes$cmdstan_diagnose()
+
+# Resumen de los resultados
+sum_draws <- fit_bayes$summary(
+    variables = c("beta", "lambda"),
+    posterior::default_summary_measures(),
+    default_convergence_measures(),
+    extra_quantiles = ~posterior::quantile2(., probs = c(.0275, .975))
+    )
+
+write.csv(sum_draws, file = "summary_exp_PH_model.csv")
+
 # Param Names
 betas_str <- character(length =  ncol(data_ord) - 3)
 for (i in 1:( ncol(data_ord) - 3)) {
@@ -196,10 +201,10 @@ for (i in 1:( ncol(data_ord) - 3)) {
 betas_str
 
 # Cadenas
-color_scheme_set("mix-blue-pink")
-
 p <- mcmc_trace(
-    fit_bayes$draws(), pars = betas_str,
+    fit_bayes$draws(),
+    regex_pars  = c("beta", "lambda"),
+    n_warmup = 500,
     facet_args = list(nrow = 5, ncol = 3, labeller = label_parsed)
 )
 p + facet_text(size = 15)
@@ -216,12 +221,12 @@ mcmc_areas_theme <- theme(
 )
 
 mcmc_areas(fit_bayes$draws(), 
-           pars = betas_str, 
+           regex_pars = c("beta", "lambda"),
            prob_outer = 1, 
            point_est = "mean", 
            prob = 0.95,
            area_method = "equal height") +
-    scale_y_discrete(labels = parse(text = rev(betas_str))) +
+    scale_y_discrete(labels = parse(text = c(betas_str, "lambda"))) +
     mcmc_areas_theme
 
 ## Correlación entre betas
@@ -250,5 +255,4 @@ ggplot(cor_melt, aes(Var1, Var2, fill = value)) +
 rm(p)
 
 # Curva de Sobrevivencia
-
          
