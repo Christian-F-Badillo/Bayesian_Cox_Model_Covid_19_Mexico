@@ -3,10 +3,12 @@
 ## Bayes libreria
 library(cmdstanr)
 library(posterior)
+library(HDInterval)
 options(mc.cores = parallel::detectCores())
 
 cmdstan_path()
 # Debes ser "C:/Users/crish/.cmdstan/cmdstan-2.36.0"
+set_cmdstan_path("C:/Users/crish/.cmdstan/cmdstan-2.36.0")
 
 # cmdstan version
 cmdstan_version()
@@ -57,16 +59,17 @@ event.data <- as.numeric(as.logical(data_ord$event))
 # Convertimos a Factor
 data_ord <- data_ord %>%
     mutate(across(
-        c(sexo, neumonia, diabetes, epoc, asma,
+        c(sexo, intubado, neumonia, diabetes, epoc, asma,
           inmusupr, hipertension, otra_com, cardiovascular,
           obesidad, renal_cronica, tabaquismo, otro_caso),
-        ~ as.factor(.x)
-    ))
+        ~ as.factor(.x -1)
+        ))
 
+summary(data_ord)
 
 #--------------------------------------------------------------------------------
 # Analísis Inferencial de los Datos Frecuentista
-surv_model <- Surv(time.data, event.data) ~ sexo + neumonia + edad + diabetes + epoc + asma + inmusupr + hipertension + otra_com + cardiovascular + obesidad + renal_cronica + tabaquismo + otro_caso
+surv_model <- Surv(time.data, event.data) ~ sexo + intubado + neumonia + edad + diabetes + epoc + asma + inmusupr + hipertension + otra_com + cardiovascular + obesidad + renal_cronica + tabaquismo + otro_caso
 
 # Ajustamos el modelo
 fit <- coxph(surv_model, data = data_ord)
@@ -92,10 +95,8 @@ saveRDS(fit, file = "modelo_cox_frec.rds")
 # Definimos el modelo Exponencial de Riesgos Proporcionales.
 
 ## Modelo en Stan
-
 write(
-"
-data {
+"data {
   int<lower=1> N;                       // Número de observaciones
   int<lower=1> K;                       // Número de covariables
   vector[N] time;                       // Tiempos observados (evento o censura)
@@ -145,15 +146,17 @@ generated quantities {
     file = "exp_PH_model.stan"
 )
 rm(fit)
+rm(datos)
 rm(curva)
+rm(surv_model)
 
 # Definimos los datos para el modelo
 stan_data <- list(
     N = nrow(data_ord),
-    K = ncol(data_ord) - 3, # Sin tiempo y evento
+    K = ncol(data_ord) - 2, # Sin tiempo y evento
     time = time.data,
     event = event.data,
-    X = data_ord[, -c(15, 16, 17)] # Sin tiempo y evento
+    X = data_ord[, -c(16, 17)] # Sin tiempo y evento
 )
 
 # Definimos el modelo
@@ -165,11 +168,11 @@ fit_bayes <- exp_PH_model$sample(
     data = stan_data,
     chains = 4,
     parallel_chains = 4,
-    iter_warmup = 500,
+    iter_warmup = 1000,
     save_warmup = T,
     iter_sampling = 1000,
     refresh = 100,
-    seed = 26534167
+    seed = 42
 )
 
 
@@ -193,19 +196,22 @@ sum_draws <- fit_bayes$summary(
 write.csv(sum_draws, file = "summary_exp_PH_model.csv")
 
 # Param Names
-betas_str <- character(length =  ncol(data_ord) - 3)
-for (i in 1:( ncol(data_ord) - 3)) {
+betas_str <- character(length =  ncol(data_ord) - 2)
+for (i in 1:( ncol(data_ord) - 2)) {
     betas_str[i] <- paste("beta[", i, "]", sep = "")
 }
 
 betas_str
 
+draws_parameters <- fit_bayes$draws(variables = c("beta", "lambda"), 
+                                    inc_warmup  = F,
+                                    format = "df") # or format="array"
+
 # Cadenas
 p <- mcmc_trace(
-    fit_bayes$draws(),
+    draws_parameters,
     regex_pars  = c("beta", "lambda"),
-    n_warmup = 500,
-    facet_args = list(nrow = 5, ncol = 3, labeller = label_parsed)
+    facet_args = list(nrow = 6, ncol = 3, labeller = label_parsed)
 )
 p + facet_text(size = 15)
 
@@ -220,7 +226,7 @@ mcmc_areas_theme <- theme(
     plot.title = element_text(size = 30, face = "bold")  # Título del gráfico
 )
 
-mcmc_areas(fit_bayes$draws(), 
+mcmc_areas(draws_parameters, 
            regex_pars = c("beta", "lambda"),
            prob_outer = 1, 
            point_est = "mean", 
@@ -230,7 +236,7 @@ mcmc_areas(fit_bayes$draws(),
     mcmc_areas_theme
 
 ## Correlación entre betas
-samples_df <- fit_bayes$draws(variables = "beta", format = "df") # or format="array"
+samples_df <- fit_bayes$draws(variables = c("beta", "lambda"), format = "df") # or format="array"
 
 samples_df <- samples_df %>% select(-c(.chain, .iteration, .draw))
 
@@ -250,9 +256,125 @@ ggplot(cor_melt, aes(Var1, Var2, fill = value)) +
           axis.title = element_text(size = 18),     # Título de ejes
           axis.text = element_text(size = 16)) +
     labs(title = "", x = "", y = "") + 
-    scale_y_discrete(labels = parse(text = betas_str)) + 
-    scale_x_discrete(labels = parse(text = betas_str))
+    scale_y_discrete(labels = parse(text = c(betas_str, "lambda"))) + 
+    scale_x_discrete(labels = parse(text = c(betas_str, "lambda")))
 rm(p)
 
-# Curva de Sobrevivencia
-         
+
+
+
+
+
+#--------------------------------------------------------------------------------
+# Graficar Curvas de Supervivencia Posteriores
+
+plot_posterior_survival <- function(posterior_draws, covariates, t_max = 365, n_curves = 100) {
+  # Extraer parámetros como vectores numéricos
+  lambda <- as.numeric(posterior_draws$lambda)
+  betas <- as.matrix(posterior_draws %>% select(matches("^beta\\[.*\\]")))
+  
+  # Validar dimensiones
+  if (ncol(betas) != length(covariates)) {
+    stop("Número de betas y covariables no coincide.")
+  }
+  
+  # Calcular riesgo base
+  linpred <- betas %*% covariates  # Resultado: vector de longitud n_muestras
+  rate <- lambda * exp(linpred)
+  
+  # Secuencia de tiempo
+  t_seq <- seq(0, t_max, length.out = 1000)
+  
+  # Asegurar que rate sea un vector numérico
+  rate <- as.numeric(rate)
+  
+  # Calcular S(t) como matriz (n_muestras × n_tiempos)
+  S_matrix <- exp(-outer(rate, t_seq))  # ✅ outer() genera matriz
+  
+  # Verificar dimensiones (debug)
+  if (is.null(dim(S_matrix))) {
+    stop("S_matrix debe ser una matriz. Verifica 'rate' y 't_seq'.")
+  }
+  
+  # Muestrear curvas posteriores
+  set.seed(123)
+  idx <- sample(nrow(S_matrix), min(n_curves, nrow(S_matrix)))
+  posterior_curves <- data.frame(
+    time = rep(t_seq, each = length(idx)),
+    survival = as.vector(S_matrix[idx, ]),
+    draw = rep(1:length(idx), times = length(t_seq))
+  )
+  
+  
+  # Estadísticos resumen
+  median_S <- apply(S_matrix, 2, median)
+  hdi_S <- apply(S_matrix, 2, function(x) hdi(x, credMass = 0.9))
+  
+  # Dataframe para ggplot
+  plot_df <- data.frame(
+    time = t_seq,
+    median = median_S,
+    lower = hdi_S[1, ],
+    upper = hdi_S[2, ]
+  )
+  
+  # Muestrear curvas posteriores (opcional)
+  set.seed(123)
+  idx <- sample(nrow(S_matrix), min(n_curves, nrow(S_matrix)))
+  posterior_curves <- data.frame(
+    time = rep(t_seq, times = length(idx)),
+    survival = as.vector(t(S_matrix[idx, ])),
+    draw = rep(idx, each = length(t_seq))
+  )
+  
+  # Graficar
+  ggplot(plot_df, aes(x = time)) +
+    # Curvas posteriores (transparentes)
+    geom_line(
+      data = posterior_curves,
+      aes(y = survival, group = draw),
+      color = "skyblue",
+      alpha = 0.1,
+      linewidth = 0.3
+    ) +
+    # Mediana y HDI
+    geom_line(aes(y = median), color = "blue", linewidth = 1.2) +
+    geom_ribbon(aes(ymin = lower, ymax = upper), fill = "blue", alpha = 0.2) +
+    labs(
+      title = "Curvas de Supervivencia Posteriores",
+      x = "Tiempo (días)",
+      y = "Probabilidad de Supervivencia"
+    ) +
+    ylim(0, 1) +
+    theme_minimal()
+}
+
+# Definimos los valores de las covariables
+data_summ <- data_ord %>%
+  summarise(across(
+    c(sexo, intubado, neumonia, edad, diabetes, epoc, asma,
+      inmusupr, hipertension, otra_com, cardiovascular,
+      obesidad, renal_cronica, tabaquismo, otro_caso),
+    ~ mean(as.numeric(.x))))
+
+# A excepción de la edad, todas las demás serán redondeadas a su valor entero
+# más cercano.
+data_summ <- data_summ %>%
+  mutate(across(
+    c(sexo, intubado, neumonia, diabetes, epoc, asma,
+      inmusupr, hipertension, otra_com, cardiovascular,
+      obesidad, renal_cronica, tabaquismo, otro_caso),
+    ~ ifelse(.x > 1.5, 1, 0) ))
+
+covariables <- as.vector(data_summ) %>% unlist()
+summ_pars <- sum_draws %>%
+  select(variable, mean, q5, q95) %>%
+  rename(parameter = variable) %>%
+  rename(hdi_lower = q5, hdi_upper = q95)
+
+plot_posterior_survival(
+  posterior_draws = draws_parameters,
+  covariates = covariables,
+  t_max = 365,
+  n_curves = 200  # Número de curvas posteriores a mostrar
+)
