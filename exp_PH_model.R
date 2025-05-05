@@ -59,7 +59,7 @@ event.data <- as.numeric(as.logical(data_ord$event))
 # Convertimos a Factor
 data_ord <- data_ord %>%
     mutate(across(
-        c(sexo, intubado, neumonia, diabetes, epoc, asma,
+        c(sexo, neumonia, diabetes, epoc, asma,
           inmusupr, hipertension, otra_com, cardiovascular,
           obesidad, renal_cronica, tabaquismo, otro_caso),
         ~ as.factor(.x -1)
@@ -67,6 +67,7 @@ data_ord <- data_ord %>%
 
 summary(data_ord)
 
+length(names(data_ord))
 #--------------------------------------------------------------------------------
 # Analísis Inferencial de los Datos Frecuentista
 surv_model <- Surv(time.data, event.data) ~ sexo + intubado + neumonia + edad + diabetes + epoc + asma + inmusupr + hipertension + otra_com + cardiovascular + obesidad + renal_cronica + tabaquismo + otro_caso
