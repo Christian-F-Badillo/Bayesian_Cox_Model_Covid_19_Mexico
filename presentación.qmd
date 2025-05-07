@@ -1,0 +1,245 @@
+---
+title: "Sobrevivencia"
+subtitle: "Modelos de Sobrevivencia Bayesianos para Covid-19"
+author: "Christian F. Badillo H."
+institute: "IIMAS"
+date: today
+date-format: long
+lang: es
+format: 
+  revealjs:
+    theme: simple
+    incremental: true
+    slide-number: true
+    logo: img\logo-iimas.png
+
+    transition: convex
+    progress: true
+    history: false
+    keyboard: true
+    mouse-wheel: false
+
+    preview-links: true
+    bibliography: ref.bib
+    reference-location: document
+    csl: apa.csl
+    toc: true
+    toc-title: "Contenido"
+
+nocite: |
+  @*
+---
+
+# Introducción a Estadística Bayesiana 
+
+## Idea 
+- La estadística bayesiana es un enfoque de la estadística que utiliza el teorema de Bayes para actualizar la probabilidad de una hipótesis a medida que se dispone de nueva evidencia.
+- En la estadística bayesiana, se considera que los parámetros son variables aleatorias y se les asigna una distribución de probabilidad a **priori**.
+- A medida que se recopilan datos, se actualiza la distribución a priori utilizando el teorema de Bayes para obtener una distribución a **posteriori**.
+
+## Teorema de Bayes {.smaller}
+
+- El teorema de Bayes se define como:
+$$
+p(\Theta | D) = \frac{p(D | \Theta) p(\Theta)}{p(D)} = \frac{p(D | \Theta) p(\Theta)}{\int_\Theta p(D | \Theta) p(\Theta) d\Theta}
+$$
+- Donde:
+  - $p(\Theta | D)$ es la distribución a posteriori de los parámetros $\Theta$ dado los datos $D$.
+  - $p(D | \Theta)$ es la verosimilitud de los datos dado los parámetros.
+  - $p(\Theta)$ es la distribución a priori de los parámetros.
+  - $p(D)$ es la evidencia o la probabilidad marginal de los datos.
+
+- En general, la posteriori se puede calcular como:
+$$
+p(\Theta | D) \propto p(D | \Theta) p(\Theta)
+$$
+
+## Conjugación 
+
+- Calcular la posterior es complicado, soluciones analíticas solo son posibles cuando el prior y la verosimilitud son conjugados, es decir, pertenecen a la misma familia exponencial.
+
+- Ejemplos de distribuciones conjugadas (prior-verosimilitud):
+  - Beta-Binomial.
+  - Normal-Normal.
+  - Gamma-Poisson.
+  - Normal-InvGamma-Normal (Regresión Lineal).
+
+## Métodos Numéricos {.smaller}
+
+- En la práctica, la mayoría de los modelos no tienen una solución analítica para la posterior, por lo que se utilizan métodos numéricos tales como **MCMC** (Markov Chain Monte Carlo).
+
+- Existe software para implementar estos métodos, como:
+  - Stan ({{< fa brands r-project >}}, {{< fa brands python >}}, {{< fa terminal >}}, {{< fa brands windows >}}, {{< fa brands apple >}}).
+  - PyMC3 ({{< fa brands python >}}. {{< fa brands windows >}}, {{< fa brands apple >}}).
+  - JAGS ({{< fa brands r-project >}}, {{< fa brands windows >}}, {{< fa brands apple >}}).
+
+- **Stan** (Sampling through adaptive neighborhoods) es el software más utilizado en la actualidad dada su flexibilidad para implementar modelos complejos y su eficiencia con el uso de variantes de MCMC como ***HMC*** (Hamiltonian Monte Carlo) y ***NUTS*** (No-U-Turn Sampler) que permiten explorar el espacio de parámetros de manera más eficiente que los métodos tradicionales como el Metropolis-Hastings o Gibbs Sampling [@stan2024]. 
+
+# Metodología
+
+## Datos {.smaller}
+
+- Datos de casos de Covid-19 en México desde el 1 de enero de 2022 hasta el 12 de diciembre de 2022. Los datos se obtuvieron del sitio web de Datos Abiertos de la Dirección General de Epidemiología del Gobierno de México^[Sitio web: [https://www.gob.mx/salud/documentos/datos-abiertos-152127](https://www.gob.mx/salud/documentos/datos-abiertos-152127)].
+- Un total de $3, 195, 409$ casos confirmados ^[Confirmados por prueba PCR o por comite experto] con $26, 108$ casos mortales y por tanto, una tasa de mortalidad de $0.82 \%$.
+- Se obtuvo una muestra estratificada de $n=5000$ casos de los cuales $n=1000$ son casos mortales y $n=4000$ son casos no mortales. Los estratos fueron seleccionados para las variables desbalanceadas en la población (sexo, intubación, hospitalización).
+- Se elimino la variable de hospitalización dado que no presentaba casos mortales en pacientes que no fueron hospitalizados generando inestabilidad en su estimación.
+- Se usaron 15 variables como regresores: `sexo`, `intubado`, `neumonia`, `edad`, `diabetes`, `epoc`, `asma`, `inmusupr`, `hipertension`, `otra_com`, `cardiovascular`, `obesidad`, `renal_cronica`, `tabaquismo` y `otro_caso`.
+
+## Software {.smaller}
+
+- Se utilizó CMDStan para implementar los modelos, dado que contiene la versión de Stan más reciente (`v2.36.0`) y permite la ejecución de modelos en paralelo, lo que mejora la eficiencia del muestreo. Además, CMDStan es más ligero y fácil de instalar que otras versiones de Stan como RStan o PyStan.
+- Para interactuar con CMDStan se utilizó el paquete `cmdstanr` de R, que permite ejecutar modelos de Stan desde R y obtener resultados en objetos de R. La versión de R utilizada fue  `4.4.3`.
+- Se usaron 4 cadenas para cada modelo, cada una con 1000 iteraciones de calentamiento (***warmup***) y 1000 iteraciones de muestreo (con semillas fijas) para los modelos paramétricos y 2000 iteraciones de muestreo para los modelos no paramétricos. El total de muestreo y cadenas se selecciono siguiendo las recomendaciones de @gelman-2013.
+- Para la comparación de los modelos se uso la validación cruzada Leave-One-Out (LOO-CV), que es un método robusto para estimar la capacidad predictiva de un modelo [@vehtari-2016; @vehtari-2015].
+
+# Modelamiento
+
+## Estimadores de Kaplan-Meier {.smaller}
+
+::: {.panel-tabset}
+### General
+
+![Estimador Kaplan-Meier General](img/km_general.jpeg){#fig-km-general .panel-tab height=400px}
+
+### Sexo
+
+![Estimador Kaplan-Meier por Sexo](img/km_sexo.jpeg){#fig-km-sexo .panel-tab height=400px}
+
+### Asma
+
+![Estimador Kaplan-Meier por Asma](img/km_asma.jpeg){#fig-km-asma .panel-tab height=400px}
+
+### Diabetes
+
+![Estimador Kaplan-Meier por Diabetes](img/km_diabetes.jpeg){#fig-km-diabetes .panel-tab height=400px}
+
+### Cardio
+
+![Estimador Kaplan-Meier por Cardiovascular](img/km_cardiovascular.jpeg){#fig-km-cardiovascular .panel-tab height=400px}
+
+### EPOC
+
+![Estimador Kaplan-Meier por EPOC](img/km_epoc.jpeg){#fig-km-epoc .panel-tab height=400px}
+
+
+### Hipertensión
+
+![Estimador Kaplan-Meier por Hipertensión](img/km_hipertension.jpeg){#fig-km-hipertension .panel-tab height=400px}
+
+
+### Inmunodef
+
+![Estimador Kaplan-Meier por Inmunodeficiencia](img/km_inmusupr.jpeg){#fig-km-inmunodeficiencia .panel-tab height=400px}
+
+### Neumonía
+
+![Estimador Kaplan-Meier por Neumonía](img/km_neumonia.jpeg){#fig-km-neumonia .panel-tab height=400px}
+
+### Obsesidad
+
+![Estimador Kaplan-Meier por Obesidad](img/km_obesidad.jpeg){#fig-km-obesidad .panel-tab height=400px}
+
+### Renal
+
+![Estimador Kaplan-Meier por Renal Crónica](img/km_renal_cronica.jpeg){#fig-km-renal-cronica .panel-tab height=400px}
+
+### Fumador
+
+![Estimador Kaplan-Meier por Tabaquismo](img/km_tabaquismo.jpeg){#fig-km-tabaquismo .panel-tab height=400px}
+
+### Otro
+
+![Estimador Kaplan-Meier por Otra Comorbilidad](img/km_otra_combor.jpeg){#fig-km-otra_com .panel-tab height=400px}
+
+### Contacto
+
+![Estimador Kaplan-Meier por Contacto con Caso Confirmado](img/km_otro_caso.jpeg){#fig-km-otra_caso .panel-tab height=400px}
+:::
+
+## Modelo de Cox {.smaller .scrollable}
+
+::: {.panel-tabset}
+
+### Estimadores
+
+```{r}
+#| echo: false
+#| warning: false
+
+# Survival analysis
+library(survival)
+library(ggplot2)
+library(survminer)
+library(tidyverse)
+library(modelsummary)
+
+#------------------------------------------------------------------
+# Arreglo de Datos
+datos <- read.csv("https://raw.githubusercontent.com/Christian-F-Badillo/Bayesian_Cox_Model_Covid_19_Mexico/refs/heads/master/COVID19MEXICO2022_muestra_clean.csv")
+
+# Quitamos lo que no se va a usar
+data_ord <- datos %>%
+    select(-c(fecha_ingreso,fecha_sintomas,fecha_def,fin_ano, tipo_paciente))
+
+# Quitmaos los na
+data_ord <- data_ord %>%
+    drop_na()
+
+# TIEMPO y EVENTOS
+time.data <- data_ord$tiempo
+event.data <- as.numeric(as.logical(data_ord$event))
+
+# Convertimos a Factor
+data_ord <- data_ord %>%
+    mutate(across(
+        c(sexo, intubado, neumonia, diabetes, epoc, asma,
+          inmusupr, hipertension, otra_com, cardiovascular,
+          obesidad, renal_cronica, tabaquismo, otro_caso),
+        ~ as.factor(.x -1)
+        ))
+#--------------------------------------------------------------------------------
+# Analísis Inferencial de los Datos Frecuentista
+surv_model <- Surv(time.data, event.data) ~ sexo + intubado + neumonia + edad + diabetes + epoc + asma + inmusupr + hipertension + otra_com + cardiovascular + obesidad + renal_cronica + tabaquismo + otro_caso
+
+# Ajustamos el modelo
+fit <- coxph(surv_model, data = data_ord)
+```
+
+```{r}
+#| echo: false
+
+modelsummary(list( "Modelo de Cox" = fit),
+             exponentiate = TRUE,
+             fmt = fmt_decimal(3, 4),             
+             statistic = c("conf.int",
+                           "std.error", 
+                           "statistic",
+                           "p.value"),
+             stars = T,
+             shape = term ~ model + statistic,
+             output = "html"
+)
+```
+
+### Curva de Sobrevivencia 
+
+```{r}
+#| echo: false
+curva <- survfit(fit)
+
+ggsurvplot(curva, data = data_ord,
+           xlab = "Tiempo",
+           ylab = "Supervivencia estimada",
+           conf.int = TRUE,
+           risk.table = T,
+           ggtheme = theme_minimal())
+```
+
+:::
+
+
+# Referencias {.smaller}
+
+## 
+::: {#refs}
+:::

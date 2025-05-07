@@ -59,7 +59,7 @@ event.data <- as.numeric(as.logical(data_ord$event))
 # Convertimos a Factor
 data_ord <- data_ord %>%
     mutate(across(
-        c(sexo, neumonia, diabetes, epoc, asma,
+        c(sexo, intubado, neumonia, diabetes, epoc, asma,
           inmusupr, hipertension, otra_com, cardiovascular,
           obesidad, renal_cronica, tabaquismo, otro_caso),
         ~ as.factor(.x -1)
