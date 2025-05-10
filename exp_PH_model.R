@@ -120,8 +120,8 @@ model {
   vector[N] log_rate = log(rate);
   vector[N] rate_time = rate .* time;
 
-  vector[N] event_vector = to_vector(event); // ✅ Conversión explícita
-  vector[N] event_complement = 1 - event_vector; // ✅ Operación válida
+  vector[N] event_vector = to_vector(event); // 
+  vector[N] event_complement = 1 - event_vector; //
 
   target += dot_product(event_vector, log_rate - rate_time) + 
             dot_product(event_complement, -rate_time);

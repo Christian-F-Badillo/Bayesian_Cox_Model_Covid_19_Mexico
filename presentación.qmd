@@ -23,11 +23,15 @@ format:
     bibliography: ref.bib
     reference-location: document
     csl: apa.csl
-    toc: true
+    toc: false
     toc-title: "Contenido"
 
 nocite: |
   @*
+
+execute: 
+  cache: true
+  freeze: auto 
 ---
 
 # Introducción a Estadística Bayesiana 
@@ -229,13 +233,327 @@ curva <- survfit(fit)
 
 ggsurvplot(curva, data = data_ord,
            xlab = "Tiempo",
-           ylab = "Supervivencia estimada",
+           ylab = "Sobrevivencia estimada",
            conf.int = TRUE,
            risk.table = T,
            ggtheme = theme_minimal())
 ```
 
 :::
+
+## Modelo Exponencial {.smaller}
+
+- Los modelos de riesgo proporcional se definen como:
+$$
+h(t|x) = h_0(t) \exp(x^t\beta)
+$$
+
+- Donde:
+  - $h(t|x)$ es la función de riesgo en el tiempo $t$ dado el vector de covariables $x$.
+  - $h_0(t)$ es la función de riesgo base.
+  - $\beta$ es el vector de coeficientes a estimar.
+
+- En el modelo exponencial, la función de riesgo base es constante y se define como:
+$$
+h_0(t) = \lambda
+$$
+
+- Entonces el modelo exponencial se define como:
+$$
+h(t|x) = \lambda \exp(x^t\beta)
+$$
+
+## Modelo Exponencial {.smaller}
+
+- La verosimilitud del modelo exponencial se define como:
+\begin{align*}
+\mathcal{L}(\lambda, \beta | t, x) &= \prod_{i=1}^n \left[\lambda \exp(x_i^t\beta) \exp(- t_i \lambda \exp(x_i^t\beta)) \right] ^{\nu_i} \left[ \exp(-t_i \lambda \exp(x_i^t\beta)) \right] ^{1 - \nu_i} \\
+&= \lambda^{\sum_{i=1}^n \nu_i}  \exp \left( \sum_{i=1}^n \nu_i x_i^t\beta \right) \exp \left(- \lambda \sum_{i=1}^n t_i \exp(x_i^t\beta) \right) \\
+\end{align*}
+- Nuestro Prior para $\beta$ es:
+$$
+\beta \sim \mathcal{N}_n (0, \sigma^2 I_n),  \quad \sigma  =  2.
+$$
+- Nuestro Prior para $\lambda$ es:  
+$$
+\lambda \sim \mathcal{G}amma(\alpha, \beta), \quad \alpha = 1, \quad \beta = 4.
+$$
+
+## Prior de $\lambda$
+
+```{r}
+#| echo: false
+
+# Prior de lambda
+x <- seq(0, 10, length.out = 2000)
+y <- dgamma(x, shape = 1, rate = 4)
+df <- data.frame(x, y)
+
+ggplot(df, aes(x = x, y = y)) +
+  geom_line(color = "blue") +
+  labs(title = "",
+       x = parse( text = "lambda"),
+       y = "Densidad") +
+  theme_minimal() +
+  theme(xaxis.text = element_text(size = 10),
+        yaxis.text = element_text(size = 10),
+        axis.title.x = element_text(size = 18),
+        axis.title.y = element_text(size = 18))
+```
+
+## Resultados del Modelo Exponencial {.smaller .scrollable}
+
+::: {.panel-tabset}
+### Cadenas
+
+![Cadenas del Modelo Exponencial.](img/exp_model_img/chains.png){#fig-chains-exp .panel-tab height=450px}
+
+### Posteriores
+
+![Posteriores Marginales del Modelo Exponencial.](img/exp_model_img/posterior_marginal.png){#fig-post-exp .panel-tab height=450px}
+
+### Correlación
+
+![Correlación Posterior del Modelo Exponencial.](img/exp_model_img/param_corr.png){#fig-cor-exp .panel-tab height=450px}
+
+### Curva de Sobrevivencia
+
+![Curvas de Sobrevivencia Posteriores del Modelo Exponencial.](img/exp_model_img/curves_surv_post.png){#fig-surv-exp .panel-tab height=450px}
+
+### Resumen 
+
+```{r}
+#| echo: false
+
+library(knitr)
+library(kableExtra)
+
+exp_sum <- read.csv("https://raw.githubusercontent.com/Christian-F-Badillo/Bayesian_Cox_Model_Covid_19_Mexico/refs/heads/master/summary_exp_PH_model.csv")
+
+betas_names <- c("Sexo", "Intubado", "Neumonia", "Edad", "Diabetes", "EPOC",
+              "Asma", "Inmunodef.", "Hipertensión", "Otra.Comorb.",
+              "Cardiovasc.", "Obesidad", "Renal.C.", "Tabaquismo",
+              "Otro.Caso")
+params_names <- c(betas_names, "lambda")
+
+exp_sum <- exp_sum %>%
+  mutate(Param = params_names) %>%
+  select(Param, mean, median, q2.75, q97.5, rhat) %>% # Exponenciamos los betas
+  mutate(mean = exp(mean),
+         median = exp(median),
+         q2.75 = exp(q2.75),
+         q97.5 = exp(q97.5))
+
+kable(exp_sum, format = "html", 
+      col.names = c("Variable", "Media", "Mediana",
+                    "HDI.Inf.", "HDI.Sup.", "Rhat"),
+      escape = F, digits = 7) %>%
+  kable_styling(full_width = F, position = "left") %>%
+  column_spec(1, bold = T) %>%
+  column_spec(2:6, width = "2cm") %>%
+  kable_styling(latex_options = c("striped", "hold_position")) %>%
+  row_spec(0, bold = T, background = "#D9EAD3") %>%
+  #row_spec(1:16, background = "#F6F6F6") %>%
+  row_spec(c(2,3, 4, 8, 10, 11, 13, 14, 15, 16), background = "#C3FFFF") %>%
+  kable_styling(font_size = 18)
+```
+:::
+
+
+## Modelo Weibull {.smaller}
+- La distribución de Weibull suele ser parametrizada como:
+$$
+\mathcal{W}eibull(\alpha, \sigma) = \frac{\alpha}{\sigma} \left( \frac{t}{\sigma} \right)^{\alpha - 1} \exp \left( - \left( \frac{t}{\sigma} \right)^{\alpha} \right), \quad t > 0, \alpha > 0, \sigma > 0.
+$$
+
+- En sobrevivencia se suele cambiar la parametrización a $\gamma = \frac{1}{\sigma^\alpha}$ y por facilitar la estimación se usará la parametrización $\lambda = \log(\gamma)$. Entonces la función de riesgo se define como:
+$$
+h(t|x) = 
+\alpha t^{\alpha - 1} \exp(\lambda + x^t\beta)
+$$ 
+
+- Esta modificación permite que el algoritmo de muestreo de HMC explore mejor el espacio de parámetros y que la estimación de $\alpha$ sea más estable.
+
+## Modelo Weibull {.smaller}
+
+- La verosimilitud del modelo Weibull se define como:
+\begin{align*}
+\mathcal{L}(\alpha, \lambda, \beta | t, x) &= \prod_{i=1}^n \left[ \alpha t_i^{\alpha - 1} \exp (\lambda + x_i^T \beta) \exp (- \exp (\lambda + x_i^T \beta) t_i^\alpha) \right] ^{\nu_i} \left[ \exp (-\exp(\lambda + x_i^T \beta) t_i^\alpha) \right] ^{1 - \nu_i} \\
+&= \alpha^{\sum_{i=1}^n \nu_i} \prod_{i=1}^n \left( t_i^{\nu_i (\alpha- 1)} \right) \exp \left( \sum_{i=1}^n \nu_i (\lambda + x_i^T \beta) \right) \exp \left( -\sum_{i=1}^n t_i^\alpha \exp( \lambda + x_i^T \beta) \right) \\
+\end{align*}
+
+- Nuestros priors son:
+   - $\lambda \sim \mathcal{N}(10, 5)$.
+   - $\alpha \sim \mathcal{G}amma(1, 1)$.
+   - $\beta \sim \mathcal{N}_n (0, \sigma^2 I_n),  \quad \sigma  =  3$.
+  
+- Dada la relación entre $\lambda$ y $\gamma$ se puede decir que $\gamma \sim \mathcal{L}og\mathcal{N}ormal(10, 5)$.
+
+## Resultados del Modelo Weibull {.smaller .scrollable}
+::: {.panel-tabset}
+
+### Resumen
+
+### Cadenas
+
+![Cadenas del Modelo Weibull.](img/weibull_model_img/chains.png){#fig-chains-weibull .panel-tab height=460px}
+
+### Posteriores
+
+![Posteriores Marginales del Modelo Weibull.](img/weibull_model_img/posterior_marginal.png){#fig-post-weibull .panel-tab height=460px}
+
+### Correlación
+
+![Correlación Posterior del Modelo Weibull.](img/weibull_model_img/param_corr.png){#fig-cor-weibull .panel-tab height=460px}
+
+
+### Curva de Sobrevivencia
+
+![Curvas de Sobrevivencia Posteriores del Modelo Weibull.](img/weibull_model_img/curv_surv_post.jpg){#fig-surv-weibull .panel-tab height=460px}
+
+:::
+
+## Modelo Semiparamétrico {.smaller}
+
+::: {.nonincremental}
+- En los modelos semiparamétricos no se asume una forma funcional para la función de riesgo base.
+
+- Para el modelo se usan particiones del tiempo y por cada intervalo de tiempo $t_j$ se asume un riesgo constante $\lambda_i, i = 1, \ldots, J$.
+
+- Las particiones del tiempo se definieron en función de los cuantiles de los tiempos no censurados, definiendo 9 intervalos de tiempo:
+```{r}
+#| echo: false
+
+# Partición del tiempo
+times <- c("(0,3]", "(3,5]", "(5,7]", "(7,9]", "(9,11]", "(11,13]", "(13,16]", "(16,21]", "(21, 364]")
+frec_events <- c(111, 96, 125, 101, 98, 88, 98, 94, 95)
+
+df <- data.frame(times, frec_events)
+df <- df %>%
+  mutate(times = factor(times, levels = times))
+df <- t(df)
+rownames(df) <- c("Intervalo de Tiempo", "Frec. Eventos")
+colnames(df) <- paste("t_", 1:9)
+
+kable(df, format = "html", 
+      escape = F) %>%
+  kable_styling(full_width = F, position = "left") %>%
+  column_spec(1, bold = T) %>%
+  column_spec(2, width = "2cm") %>%
+  kable_styling(latex_options = c("striped", "hold_position")) %>%
+  row_spec(0, bold = T, background = "#D9EAD3")
+  #kable_styling(font_size = 18)
+```
+
+- Podemos asumir que los riesgos estan correalcionados o no, dado que un modelo que asume correlación contiene al otro como un caso especial, asumiremos que se correlacionan.
+:::
+
+## Modelo Semiparamétrico {.smaller}
+
+- El modelo semiparamétrico se define como:
+$$
+h(t_j|x) = \lambda_j \exp(x^t\beta), \quad j = 1, \ldots, J.
+$$
+
+- Su función de verosimilitud se define como:
+$$
+\mathcal{L}(\lambda, \beta | t, x) = \prod_{i=1}^n \left[ \prod_{j=1}^J \left( \lambda_j \exp(x_i^t\beta) \right) ^{\delta_{ij}}  \right] \exp \left( - \sum_{j = 1}^{J_i} \lambda_i  t_{ij} \exp (x_i^T \beta) \right).
+$$
+Donde $J_i$ es el último intervalo del individuo en riesgo, $t_{ij} = \min (t_i, s_j) - s_{j-1}$ es el tiempo en el intervalo $j$ y $\delta_{ij}$ es un indicador de si el individuo $i$ fue censurado o no en el intervalo $j$.
+
+## Modelo Semiparamétrico {.smaller}
+
+- Los priors son:
+
+  - $\beta \sim \mathcal{N}_n (0, \sigma^2 I_n),  \quad \sigma_\beta  =  3$.
+  - $\log (\lambda) \sim \mathcal{N}_J (0, \sigma_\lambda^2 L)$
+  - $\sigma_\lambda^2 \sim \mathcal{G}amma(\alpha_\lambda, \beta_\lambda) \quad \alpha_\lambda = 1, \beta_\lambda = 1$.
+  - $L \sim \mathcal{L}\mathcal{K}\mathcal{J} (\eta) \quad \eta = 2$.
+
+- Donde LJK es la distribución Lewandowski-Kurowicka-Joe con parametro $\eta$ que controla el tipo de matriz de correlación con mayor probabilidad [@lewandowski-2009].
+  - Si $\eta = 1$ la distribución es uniforme sobre las matrices de correlación.
+  - Si $\eta > 1$ la densidad de probabilidad es mayor para matrices diagonales.
+  - Si $\eta < 1$ la densidad de probabilidad es mayor para matrices de correlación con elementos no diagonales.
+
+## Resultados del Modelo Semiparamétrico {.smaller .scrollable}
+::: {.panel-tabset}
+
+### Cadenas $\beta$
+
+![Cadenas para $\beta$.](img/semiparam_model_img/chains_beta.png){#fig-chainsbetas-semiparam .panel-tab height=460px}
+
+### Cadenas $\lambda$
+
+![Cadenas para $\lambda$.](img/semiparam_model_img/hazard_base_constants_chains.png){#fig-chainslambda-semiparam .panel-tab height=460px}
+
+### Posteriores $\beta$
+
+![Posteriores Marginales para $\beta$.](img/semiparam_model_img/betas_posterior.png){#fig-postbetas-semiparam .panel-tab height=460px}
+
+### Posteriores $\lambda$
+
+![Posteriores Marginales para $\lambda$.](img/semiparam_model_img/posterior_haz_const.png){#fig-postlambda-semiparam .panel-tab height=460px}
+
+### Posteriores $L$
+
+![Posteriores Marginales para $L$.](img/semiparam_model_img/post_corr_intervals.png){#fig-postsigmalambda-semiparam .panel-tab height=460px}
+
+:::
+
+## Resultados del Modelo Semiparamétrico {.smaller .scrollable}
+::: {.panel-tabset}
+
+### Correlación $\lambda$
+
+![Correlación Esperada.](img/semiparam_model_img/corr_intervals_post_mean.png){#fig-corr-semiparam .panel-tab height=460px}
+
+### Correlación $\beta$
+
+![Correlación Posterior.](img/semiparam_model_img/betas_corr_plot.jpg){#fig-corrbetas-semiparam .panel-tab height=460px}
+
+### Curva de Sobrevivencia
+
+![Curvas de Sobrevivencia Posteriores.](img/semiparam_model_img/curves_surv_post.png){#fig-surv-semiparam .panel-tab height=460px}
+
+:::
+
+
+## Comparación de Modelos {.smaller .scrollable}
+
+:::: {.panel-tabset}
+
+### LOO-CV 
+
+::: {.nonincremental}
+- La comparación de modelos se realizó utilizando la validación cruzada Leave-One-Out (LOO-CV) [@vehtari-2016; @vehtari-2015].
+
+```{r}
+#| echo: false
+model_comparation <- read.csv("https://raw.githubusercontent.com/Christian-F-Badillo/Bayesian_Cox_Model_Covid_19_Mexico/refs/heads/master/model_comparation.csv")
+
+model_comparation <- model_comparation %>%
+  select(-X)
+
+kable(t(model_comparation), format = "html",
+      col.names = c("Estadístico", "Modelo Semiparamétrico", "Modelo Weibull", "Modelo Exponencial"),
+      align = "clll",
+      escape = F, digits = 2) %>%
+  kable_styling(full_width = F, position = "left") %>%
+  column_spec(1, bold = T) %>%
+  kable_styling(latex_options = c("striped", "hold_position")) %>%
+  row_spec(0, bold = T, background = "#D9EAD3") %>%
+  kable_styling(font_size = 24)
+```
+
+:::
+
+### LOOIC
+
+![LOOIC](img/looic_model_comapration.png){#fig-LOO-CV-P .panel-tab height=460px}	
+
+::::
+
+
 
 
 # Referencias {.smaller}

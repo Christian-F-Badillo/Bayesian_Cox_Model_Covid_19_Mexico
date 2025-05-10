@@ -143,6 +143,10 @@
       margin-right: 0; 
     }
   </style>
+  <script src="presentación_files/libs/kePrint-0.0.1/kePrint.js"></script>
+
+  <link href="presentación_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -163,34 +167,7 @@ Christian F. Badillo H.
     </div>
 </div>
 
-  <p class="date">6 de mayo de 2025</p>
-</section><section id="TOC">
-<nav role="doc-toc"> 
-<h2 id="toc-title">Contenido</h2>
-<ul>
-<li class="fragment"><a href="#/introducción-a-estadística-bayesiana" id="/toc-introducción-a-estadística-bayesiana">Introducción a Estadística Bayesiana</a>
-<ul>
-<li class="fragment"><a href="#/idea" id="/toc-idea">Idea</a></li>
-<li class="fragment"><a href="#/teorema-de-bayes" id="/toc-teorema-de-bayes">Teorema de Bayes</a></li>
-<li class="fragment"><a href="#/conjugación" id="/toc-conjugación">Conjugación</a></li>
-<li class="fragment"><a href="#/métodos-numéricos" id="/toc-métodos-numéricos">Métodos Numéricos</a></li>
-</ul></li>
-<li class="fragment"><a href="#/metodología" id="/toc-metodología">Metodología</a>
-<ul>
-<li class="fragment"><a href="#/datos" id="/toc-datos">Datos</a></li>
-<li class="fragment"><a href="#/software" id="/toc-software">Software</a></li>
-</ul></li>
-<li class="fragment"><a href="#/modelamiento" id="/toc-modelamiento">Modelamiento</a>
-<ul>
-<li class="fragment"><a href="#/estimadores-de-kaplan-meier" id="/toc-estimadores-de-kaplan-meier">Estimadores de Kaplan-Meier</a></li>
-<li class="fragment"><a href="#/modelo-de-cox" id="/toc-modelo-de-cox">Modelo de Cox</a></li>
-</ul></li>
-<li class="fragment"><a href="#/referencias" id="/toc-referencias">Referencias</a>
-<ul>
-
-</ul></li>
-</ul>
-</nav>
+  <p class="date">8 de mayo de 2025</p>
 </section>
 <section>
 <section id="introducción-a-estadística-bayesiana" class="title-slide slide level1 center">
@@ -466,8 +443,8 @@ Figura&nbsp;14: Estimador Kaplan-Meier por Contacto con Caso Confirmado
 
     <script>
 
-      function styleCell_moz2nmzhrch3eddoq8r5(i, j, css_id) {
-          var table = document.getElementById("tinytable_moz2nmzhrch3eddoq8r5");
+      function styleCell_o3zdx2qq4eyparmf5axn(i, j, css_id) {
+          var table = document.getElementById("tinytable_o3zdx2qq4eyparmf5axn");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -477,7 +454,7 @@ Figura&nbsp;14: Estimador Kaplan-Meier por Contacto con Caso Confirmado
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_moz2nmzhrch3eddoq8r5');
+        var table = document.getElementById('tinytable_o3zdx2qq4eyparmf5axn');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -485,8 +462,8 @@ Figura&nbsp;14: Estimador Kaplan-Meier por Contacto con Caso Confirmado
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_moz2nmzhrch3eddoq8r5(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_moz2nmzhrch3eddoq8r5");
+      function spanCell_o3zdx2qq4eyparmf5axn(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_o3zdx2qq4eyparmf5axn");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -516,23 +493,23 @@ Figura&nbsp;14: Estimador Kaplan-Meier por Contacto con Caso Confirmado
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 0, j: 2 }, { i: 0, j: 6 }, { i: 0, j: 4 }, { i: 0, j: 3 }, { i: 0, j: 5 },  ], css_id: 'tinytable_css_uvddkg8zvvmkrfeqqcfe',}, 
-          { positions: [ { i: 20, j: 1 }, { i: 20, j: 2 }, { i: 20, j: 3 }, { i: 20, j: 5 }, { i: 20, j: 4 }, { i: 20, j: 6 },  ], css_id: 'tinytable_css_ikihwmq33n2htvym66uo',}, 
-          { positions: [ { i: 16, j: 2 }, { i: 16, j: 1 }, { i: 16, j: 3 }, { i: 16, j: 5 }, { i: 16, j: 4 }, { i: 16, j: 6 },  ], css_id: 'tinytable_css_f932k5hotn4t2grmrvfl',}, 
-          { positions: [ { i: 3, j: 1 }, { i: 5, j: 1 }, { i: 7, j: 1 }, { i: 9, j: 1 }, { i: 6, j: 1 }, { i: 11, j: 1 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 14, j: 3 }, { i: 17, j: 1 }, { i: 18, j: 1 }, { i: 19, j: 1 }, { i: 18, j: 3 }, { i: 8, j: 1 }, { i: 18, j: 5 }, { i: 10, j: 1 }, { i: 3, j: 2 }, { i: 12, j: 1 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 7, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 10, j: 2 }, { i: 11, j: 2 }, { i: 12, j: 2 }, { i: 13, j: 2 }, { i: 14, j: 2 }, { i: 15, j: 2 }, { i: 14, j: 4 }, { i: 17, j: 2 }, { i: 18, j: 2 }, { i: 19, j: 2 }, { i: 18, j: 4 }, { i: 2, j: 1 }, { i: 18, j: 6 }, { i: 4, j: 1 }, { i: 3, j: 3 }, { i: 4, j: 3 }, { i: 5, j: 3 }, { i: 6, j: 3 }, { i: 7, j: 3 }, { i: 8, j: 3 }, { i: 9, j: 3 }, { i: 10, j: 3 }, { i: 11, j: 3 }, { i: 12, j: 3 }, { i: 13, j: 3 }, { i: 12, j: 5 }, { i: 15, j: 3 }, { i: 14, j: 5 }, { i: 17, j: 3 }, { i: 10, j: 4 }, { i: 19, j: 3 }, { i: 12, j: 4 }, { i: 2, j: 2 }, { i: 12, j: 6 }, { i: 4, j: 2 }, { i: 3, j: 4 }, { i: 4, j: 4 }, { i: 5, j: 4 }, { i: 6, j: 4 }, { i: 7, j: 4 }, { i: 8, j: 4 }, { i: 9, j: 4 }, { i: 2, j: 5 }, { i: 11, j: 4 }, { i: 4, j: 5 }, { i: 13, j: 4 }, { i: 6, j: 5 }, { i: 15, j: 4 }, { i: 14, j: 6 }, { i: 17, j: 4 }, { i: 10, j: 5 }, { i: 19, j: 4 }, { i: 4, j: 6 }, { i: 2, j: 3 }, { i: 6, j: 6 }, { i: 15, j: 5 }, { i: 3, j: 5 }, { i: 17, j: 5 }, { i: 5, j: 5 }, { i: 19, j: 5 }, { i: 7, j: 5 }, { i: 8, j: 5 }, { i: 9, j: 5 }, { i: 2, j: 6 }, { i: 11, j: 5 }, { i: 17, j: 6 }, { i: 13, j: 5 }, { i: 19, j: 6 }, { i: 7, j: 6 }, { i: 8, j: 6 }, { i: 9, j: 6 }, { i: 10, j: 6 }, { i: 11, j: 6 }, { i: 3, j: 6 }, { i: 2, j: 4 }, { i: 5, j: 6 }, { i: 15, j: 6 }, { i: 13, j: 6 },  ], css_id: 'tinytable_css_et80t8nhbx1g9m4h2hyk',}, 
-          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_1oy1ue3snkvor3dzyavt',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 1, j: 3 }, { i: 1, j: 5 }, { i: 1, j: 4 }, { i: 1, j: 2 }, { i: 1, j: 6 },  ], css_id: 'tinytable_css_l5bro229uph9q3323a69',}, 
-          { positions: [ { i: 20, j: 0 },  ], css_id: 'tinytable_css_z53662oqr93eke41nve6',}, 
-          { positions: [ { i: 16, j: 0 },  ], css_id: 'tinytable_css_qmyzn4h1hv1sruszpo9e',}, 
-          { positions: [ { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 17, j: 0 }, { i: 18, j: 0 }, { i: 19, j: 0 },  ], css_id: 'tinytable_css_p613u2tf8yw9hflnd0ei',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_x6agwwf1eewgrgl0jy5h',}, 
-          { positions: [ { i: 1, j: 0 },  ], css_id: 'tinytable_css_48a3upa1lcjcq6jov456',}, 
+          { positions: [ { i: 0, j: 2 }, { i: 0, j: 6 }, { i: 0, j: 4 }, { i: 0, j: 3 }, { i: 0, j: 5 },  ], css_id: 'tinytable_css_8r081k1hs9k8s32frr6q',}, 
+          { positions: [ { i: 20, j: 1 }, { i: 20, j: 2 }, { i: 20, j: 3 }, { i: 20, j: 5 }, { i: 20, j: 4 }, { i: 20, j: 6 },  ], css_id: 'tinytable_css_lbpsr6v7zwqh9z7akiiy',}, 
+          { positions: [ { i: 16, j: 2 }, { i: 16, j: 1 }, { i: 16, j: 3 }, { i: 16, j: 5 }, { i: 16, j: 4 }, { i: 16, j: 6 },  ], css_id: 'tinytable_css_6cam0wmeybmeb7czqcsr',}, 
+          { positions: [ { i: 3, j: 1 }, { i: 5, j: 1 }, { i: 7, j: 1 }, { i: 9, j: 1 }, { i: 6, j: 1 }, { i: 11, j: 1 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 14, j: 3 }, { i: 17, j: 1 }, { i: 18, j: 1 }, { i: 19, j: 1 }, { i: 18, j: 3 }, { i: 8, j: 1 }, { i: 18, j: 5 }, { i: 10, j: 1 }, { i: 3, j: 2 }, { i: 12, j: 1 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 7, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 10, j: 2 }, { i: 11, j: 2 }, { i: 12, j: 2 }, { i: 13, j: 2 }, { i: 14, j: 2 }, { i: 15, j: 2 }, { i: 14, j: 4 }, { i: 17, j: 2 }, { i: 18, j: 2 }, { i: 19, j: 2 }, { i: 18, j: 4 }, { i: 2, j: 1 }, { i: 18, j: 6 }, { i: 4, j: 1 }, { i: 3, j: 3 }, { i: 4, j: 3 }, { i: 5, j: 3 }, { i: 6, j: 3 }, { i: 7, j: 3 }, { i: 8, j: 3 }, { i: 9, j: 3 }, { i: 10, j: 3 }, { i: 11, j: 3 }, { i: 12, j: 3 }, { i: 13, j: 3 }, { i: 12, j: 5 }, { i: 15, j: 3 }, { i: 14, j: 5 }, { i: 17, j: 3 }, { i: 10, j: 4 }, { i: 19, j: 3 }, { i: 12, j: 4 }, { i: 2, j: 2 }, { i: 12, j: 6 }, { i: 4, j: 2 }, { i: 3, j: 4 }, { i: 4, j: 4 }, { i: 5, j: 4 }, { i: 6, j: 4 }, { i: 7, j: 4 }, { i: 8, j: 4 }, { i: 9, j: 4 }, { i: 2, j: 5 }, { i: 11, j: 4 }, { i: 4, j: 5 }, { i: 13, j: 4 }, { i: 6, j: 5 }, { i: 15, j: 4 }, { i: 14, j: 6 }, { i: 17, j: 4 }, { i: 10, j: 5 }, { i: 19, j: 4 }, { i: 4, j: 6 }, { i: 2, j: 3 }, { i: 6, j: 6 }, { i: 15, j: 5 }, { i: 3, j: 5 }, { i: 17, j: 5 }, { i: 5, j: 5 }, { i: 19, j: 5 }, { i: 7, j: 5 }, { i: 8, j: 5 }, { i: 9, j: 5 }, { i: 2, j: 6 }, { i: 11, j: 5 }, { i: 17, j: 6 }, { i: 13, j: 5 }, { i: 19, j: 6 }, { i: 7, j: 6 }, { i: 8, j: 6 }, { i: 9, j: 6 }, { i: 10, j: 6 }, { i: 11, j: 6 }, { i: 3, j: 6 }, { i: 2, j: 4 }, { i: 5, j: 6 }, { i: 15, j: 6 }, { i: 13, j: 6 },  ], css_id: 'tinytable_css_ll5clot5p1u7b4ox0nl5',}, 
+          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_6e89g68k11i0rlk80ft1',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 1, j: 3 }, { i: 1, j: 5 }, { i: 1, j: 4 }, { i: 1, j: 2 }, { i: 1, j: 6 },  ], css_id: 'tinytable_css_jtqdunr9iqxpv28wfobj',}, 
+          { positions: [ { i: 20, j: 0 },  ], css_id: 'tinytable_css_pyhzbw46sg9xkc6bdjyt',}, 
+          { positions: [ { i: 16, j: 0 },  ], css_id: 'tinytable_css_0dxyunzxxqplp0rah8bm',}, 
+          { positions: [ { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 17, j: 0 }, { i: 18, j: 0 }, { i: 19, j: 0 },  ], css_id: 'tinytable_css_p1rw99s7f9cbicm7xwym',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_nvnycsjmbpxn99khqlcg',}, 
+          { positions: [ { i: 1, j: 0 },  ], css_id: 'tinytable_css_lv14vmp7fosv0i2nspst',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_moz2nmzhrch3eddoq8r5(cell.i, cell.j, group.css_id);
+                  styleCell_o3zdx2qq4eyparmf5axn(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -540,20 +517,20 @@ Figura&nbsp;14: Estimador Kaplan-Meier por Contacto con Caso Confirmado
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_uvddkg8zvvmkrfeqqcfe, .table th.tinytable_css_uvddkg8zvvmkrfeqqcfe { text-align: center; text-align: center; border-top: solid #d3d8dc 0.1em; text-align: center; }
-      .table td.tinytable_css_ikihwmq33n2htvym66uo, .table th.tinytable_css_ikihwmq33n2htvym66uo { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_f932k5hotn4t2grmrvfl, .table th.tinytable_css_f932k5hotn4t2grmrvfl { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_et80t8nhbx1g9m4h2hyk, .table th.tinytable_css_et80t8nhbx1g9m4h2hyk { text-align: center; }
-      .table td.tinytable_css_1oy1ue3snkvor3dzyavt, .table th.tinytable_css_1oy1ue3snkvor3dzyavt { text-align: center; text-align: center; border-top: solid #d3d8dc 0.1em; text-align: center; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_l5bro229uph9q3323a69, .table th.tinytable_css_l5bro229uph9q3323a69 { text-align: center; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_z53662oqr93eke41nve6, .table th.tinytable_css_z53662oqr93eke41nve6 { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_qmyzn4h1hv1sruszpo9e, .table th.tinytable_css_qmyzn4h1hv1sruszpo9e { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_p613u2tf8yw9hflnd0ei, .table th.tinytable_css_p613u2tf8yw9hflnd0ei { text-align: left; }
-      .table td.tinytable_css_x6agwwf1eewgrgl0jy5h, .table th.tinytable_css_x6agwwf1eewgrgl0jy5h { text-align: left; text-align: center; border-top: solid #d3d8dc 0.1em; text-align: center; }
-      .table td.tinytable_css_48a3upa1lcjcq6jov456, .table th.tinytable_css_48a3upa1lcjcq6jov456 { text-align: left; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_8r081k1hs9k8s32frr6q, .table th.tinytable_css_8r081k1hs9k8s32frr6q { text-align: center; text-align: center; border-top: solid #d3d8dc 0.1em; text-align: center; }
+      .table td.tinytable_css_lbpsr6v7zwqh9z7akiiy, .table th.tinytable_css_lbpsr6v7zwqh9z7akiiy { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_6cam0wmeybmeb7czqcsr, .table th.tinytable_css_6cam0wmeybmeb7czqcsr { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_ll5clot5p1u7b4ox0nl5, .table th.tinytable_css_ll5clot5p1u7b4ox0nl5 { text-align: center; }
+      .table td.tinytable_css_6e89g68k11i0rlk80ft1, .table th.tinytable_css_6e89g68k11i0rlk80ft1 { text-align: center; text-align: center; border-top: solid #d3d8dc 0.1em; text-align: center; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_jtqdunr9iqxpv28wfobj, .table th.tinytable_css_jtqdunr9iqxpv28wfobj { text-align: center; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_pyhzbw46sg9xkc6bdjyt, .table th.tinytable_css_pyhzbw46sg9xkc6bdjyt { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_0dxyunzxxqplp0rah8bm, .table th.tinytable_css_0dxyunzxxqplp0rah8bm { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_p1rw99s7f9cbicm7xwym, .table th.tinytable_css_p1rw99s7f9cbicm7xwym { text-align: left; }
+      .table td.tinytable_css_nvnycsjmbpxn99khqlcg, .table th.tinytable_css_nvnycsjmbpxn99khqlcg { text-align: left; text-align: center; border-top: solid #d3d8dc 0.1em; text-align: center; }
+      .table td.tinytable_css_lv14vmp7fosv0i2nspst, .table th.tinytable_css_lv14vmp7fosv0i2nspst { text-align: left; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_moz2nmzhrch3eddoq8r5" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_o3zdx2qq4eyparmf5axn" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
 <tr>
 <th scope="col" align="center" colspan="1"> </th>
@@ -763,6 +740,635 @@ Figura&nbsp;14: Estimador Kaplan-Meier por Contacto con Caso Confirmado
 </div>
 </div>
 </div>
+</section>
+<section id="modelo-exponencial" class="slide level2 smaller">
+<h2>Modelo Exponencial</h2>
+<ul>
+<li class="fragment"><p>Los modelos de riesgo proporcional se definen como: <span class="math display">\[
+h(t|x) = h_0(t) \exp(x^t\beta)
+\]</span></p></li>
+<li class="fragment"><p>Donde:</p>
+<ul>
+<li class="fragment"><span class="math inline">\(h(t|x)\)</span> es la función de riesgo en el tiempo <span class="math inline">\(t\)</span> dado el vector de covariables <span class="math inline">\(x\)</span>.</li>
+<li class="fragment"><span class="math inline">\(h_0(t)\)</span> es la función de riesgo base.</li>
+<li class="fragment"><span class="math inline">\(\beta\)</span> es el vector de coeficientes a estimar.</li>
+</ul></li>
+<li class="fragment"><p>En el modelo exponencial, la función de riesgo base es constante y se define como: <span class="math display">\[
+h_0(t) = \lambda
+\]</span></p></li>
+<li class="fragment"><p>Entonces el modelo exponencial se define como: <span class="math display">\[
+h(t|x) = \lambda \exp(x^t\beta)
+\]</span></p></li>
+</ul>
+</section>
+<section id="modelo-exponencial-1" class="slide level2 smaller">
+<h2>Modelo Exponencial</h2>
+<ul>
+<li class="fragment">La verosimilitud del modelo exponencial se define como: <span class="math display">\[\begin{align*}
+\mathcal{L}(\lambda, \beta | t, x) &amp;= \prod_{i=1}^n \left[\lambda \exp(x_i^t\beta) \exp(- t_i \lambda \exp(x_i^t\beta)) \right] ^{\nu_i} \left[ \exp(-t_i \lambda \exp(x_i^t\beta)) \right] ^{1 - \nu_i} \\
+&amp;= \lambda^{\sum_{i=1}^n \nu_i}  \exp \left( \sum_{i=1}^n \nu_i x_i^t\beta \right) \exp \left(- \lambda \sum_{i=1}^n t_i \exp(x_i^t\beta) \right) \\
+\end{align*}\]</span></li>
+<li class="fragment">Nuestro Prior para <span class="math inline">\(\beta\)</span> es: <span class="math display">\[
+\beta \sim \mathcal{N}_n (0, \sigma^2 I_n),  \quad \sigma  =  2.
+\]</span></li>
+<li class="fragment">Nuestro Prior para <span class="math inline">\(\lambda\)</span> es:<br>
+<span class="math display">\[
+\lambda \sim \mathcal{G}amma(\alpha, \beta), \quad \alpha = 1, \quad \beta = 4.
+\]</span></li>
+</ul>
+</section>
+<section id="prior-de-lambda" class="slide level2">
+<h2>Prior de <span class="math inline">\(\lambda\)</span></h2>
+
+<img data-src="presentación_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
+<section id="resultados-del-modelo-exponencial" class="slide level2 smaller scrollable">
+<h2>Resultados del Modelo Exponencial</h2>
+<div class="panel-tabset">
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Cadenas</a></li><li><a href="#tabset-3-2">Posteriores</a></li><li><a href="#tabset-3-3">Correlación</a></li><li><a href="#tabset-3-4">Curva de Sobrevivencia</a></li><li><a href="#tabset-3-5">Resumen</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1">
+<div id="fig-chains-exp" class="panel-tab quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-chains-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/exp_model_img/chains.png" class="panel-tab" height="450">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chains-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;15: Cadenas del Modelo Exponencial.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-3-2">
+<div id="fig-post-exp" class="panel-tab quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-post-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/exp_model_img/posterior_marginal.png" class="panel-tab" height="450">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-post-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;16: Posteriores Marginales del Modelo Exponencial.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-3-3">
+<div id="fig-cor-exp" class="panel-tab quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-cor-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/exp_model_img/param_corr.png" class="panel-tab" height="450">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cor-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;17: Correlación Posterior del Modelo Exponencial.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-3-4">
+<div id="fig-surv-exp" class="panel-tab quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-surv-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/exp_model_img/curves_surv_post.png" class="panel-tab" height="450">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-surv-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;18: Curvas de Sobrevivencia Posteriores del Modelo Exponencial.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-3-5">
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top" data-quarto-postprocess="true" style="width: auto !important;  margin-left: auto; margin-right: auto; font-size: 18px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">Variable</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">Media</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">Mediana</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">HDI.Inf.</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">HDI.Sup.</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">Rhat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Sexo</td>
+<td style="text-align: right; width: 2cm;">0.8841155</td>
+<td style="text-align: right; width: 2cm;">0.8845882</td>
+<td style="text-align: right; width: 2cm;">0.7774838</td>
+<td style="text-align: right; width: 2cm;">1.0071996</td>
+<td style="text-align: right; width: 2cm;">1.0000823</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">Intubado</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.2391555</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.2397863</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0313271</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.4945922</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0001671</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">Neumonia</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.5070529</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.5071538</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.4424911</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.5804034</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0036570</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">Edad</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0411737</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0411668</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0372886</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0451037</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0008884</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Diabetes</td>
+<td style="text-align: right; width: 2cm;">0.9326648</td>
+<td style="text-align: right; width: 2cm;">0.9320942</td>
+<td style="text-align: right; width: 2cm;">0.8090104</td>
+<td style="text-align: right; width: 2cm;">1.0760078</td>
+<td style="text-align: right; width: 2cm;">1.0014353</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">EPOC</td>
+<td style="text-align: right; width: 2cm;">0.9767869</td>
+<td style="text-align: right; width: 2cm;">0.9740342</td>
+<td style="text-align: right; width: 2cm;">0.7687572</td>
+<td style="text-align: right; width: 2cm;">1.2801329</td>
+<td style="text-align: right; width: 2cm;">1.0011719</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Asma</td>
+<td style="text-align: right; width: 2cm;">1.0079122</td>
+<td style="text-align: right; width: 2cm;">0.9970430</td>
+<td style="text-align: right; width: 2cm;">0.6179481</td>
+<td style="text-align: right; width: 2cm;">1.7364336</td>
+<td style="text-align: right; width: 2cm;">0.9995937</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">Inmunodef.</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.6432997</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.6403157</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.4820471</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.8821969</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0009576</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Hipertensión</td>
+<td style="text-align: right; width: 2cm;">0.9033493</td>
+<td style="text-align: right; width: 2cm;">0.9031993</td>
+<td style="text-align: right; width: 2cm;">0.7824927</td>
+<td style="text-align: right; width: 2cm;">1.0486390</td>
+<td style="text-align: right; width: 2cm;">1.0013354</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">Otra.Comorb.</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.7565729</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.7547939</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.5988804</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.9695874</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0015843</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">Cardiovasc.</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.3434491</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.3381024</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0592217</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.7555691</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0025665</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">Obesidad</td>
+<td style="text-align: right; width: 2cm;">0.8859402</td>
+<td style="text-align: right; width: 2cm;">0.8846289</td>
+<td style="text-align: right; width: 2cm;">0.7211200</td>
+<td style="text-align: right; width: 2cm;">1.1046295</td>
+<td style="text-align: right; width: 2cm;">0.9998595</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">Renal.C.</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.6086575</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.6079963</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.5072028</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.7407646</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0012284</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">Tabaquismo</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.4006692</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.3960628</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0696845</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.8755852</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0004086</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">Otro.Caso</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.4921446</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.4937257</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.2504800</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.7862214</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0007815</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">lambda</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0006380</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0004673</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0001018</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0022736</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0002965</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="modelo-weibull" class="slide level2 smaller">
+<h2>Modelo Weibull</h2>
+<ul>
+<li class="fragment"><p>La distribución de Weibull suele ser parametrizada como: <span class="math display">\[
+\mathcal{W}eibull(\alpha, \sigma) = \frac{\alpha}{\sigma} \left( \frac{t}{\sigma} \right)^{\alpha - 1} \exp \left( - \left( \frac{t}{\sigma} \right)^{\alpha} \right), \quad t &gt; 0, \alpha &gt; 0, \sigma &gt; 0.
+\]</span></p></li>
+<li class="fragment"><p>En sobrevivencia se suele cambiar la parametrización a <span class="math inline">\(\gamma = \frac{1}{\sigma^\alpha}\)</span> y por facilitar la estimación se usará la parametrización <span class="math inline">\(\lambda = \log(\gamma)\)</span>. Entonces la función de riesgo se define como: <span class="math display">\[
+h(t|x) =
+\alpha t^{\alpha - 1} \exp(\lambda + x^t\beta)
+\]</span></p></li>
+<li class="fragment"><p>Esta modificación permite que el algoritmo de muestreo de HMC explore mejor el espacio de parámetros y que la estimación de <span class="math inline">\(\alpha\)</span> sea más estable.</p></li>
+</ul>
+</section>
+<section id="modelo-weibull-1" class="slide level2 smaller">
+<h2>Modelo Weibull</h2>
+<ul>
+<li class="fragment"><p>La verosimilitud del modelo Weibull se define como: <span class="math display">\[\begin{align*}
+\mathcal{L}(\alpha, \lambda, \beta | t, x) &amp;= \prod_{i=1}^n \left[ \alpha t_i^{\alpha - 1} \exp (\lambda + x_i^T \beta) \exp (- \exp (\lambda + x_i^T \beta) t_i^\alpha) \right] ^{\nu_i} \left[ \exp (-\exp(\lambda + x_i^T \beta) t_i^\alpha) \right] ^{1 - \nu_i} \\
+&amp;= \alpha^{\sum_{i=1}^n \nu_i} \prod_{i=1}^n \left( t_i^{\nu_i (\alpha- 1)} \right) \exp \left( \sum_{i=1}^n \nu_i (\lambda + x_i^T \beta) \right) \exp \left( -\sum_{i=1}^n t_i^\alpha \exp( \lambda + x_i^T \beta) \right) \\
+\end{align*}\]</span></p></li>
+<li class="fragment"><p>Nuestros priors son:</p>
+<ul>
+<li class="fragment"><span class="math inline">\(\lambda \sim \mathcal{N}(10, 5)\)</span>.</li>
+<li class="fragment"><span class="math inline">\(\alpha \sim \mathcal{G}amma(1, 1)\)</span>.</li>
+<li class="fragment"><span class="math inline">\(\beta \sim \mathcal{N}_n (0, \sigma^2 I_n),  \quad \sigma  =  3\)</span>.</li>
+</ul></li>
+<li class="fragment"><p>Dada la relación entre <span class="math inline">\(\lambda\)</span> y <span class="math inline">\(\gamma\)</span> se puede decir que <span class="math inline">\(\gamma \sim \mathcal{L}og\mathcal{N}ormal(10, 5)\)</span>.</p></li>
+</ul>
+</section>
+<section id="resultados-del-modelo-weibull" class="slide level2 smaller scrollable">
+<h2>Resultados del Modelo Weibull</h2>
+<div class="panel-tabset">
+<ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">Resumen</a></li><li><a href="#tabset-4-2">Cadenas</a></li><li><a href="#tabset-4-3">Posteriores</a></li><li><a href="#tabset-4-4">Correlación</a></li><li><a href="#tabset-4-5">Curva de Sobrevivencia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1">
+
+</div>
+<div id="tabset-4-2">
+<div id="fig-chains-weibull" class="panel-tab quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-chains-weibull-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/weibull_model_img/chains.png" class="panel-tab" height="460">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chains-weibull-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;19: Cadenas del Modelo Weibull.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-4-3">
+<div id="fig-post-weibull" class="panel-tab quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-post-weibull-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/weibull_model_img/posterior_marginal.png" class="panel-tab" height="460">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-post-weibull-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;20: Posteriores Marginales del Modelo Weibull.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-4-4">
+<div id="fig-cor-weibull" class="panel-tab quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-cor-weibull-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/weibull_model_img/param_corr.png" class="panel-tab" height="460">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cor-weibull-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;21: Correlación Posterior del Modelo Weibull.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-4-5">
+<div id="fig-surv-weibull" class="panel-tab quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-surv-weibull-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/weibull_model_img/curv_surv_post.jpg" class="panel-tab" height="460">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-surv-weibull-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;22: Curvas de Sobrevivencia Posteriores del Modelo Weibull.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="modelo-semiparamétrico" class="slide level2 smaller">
+<h2>Modelo Semiparamétrico</h2>
+<div>
+<ul>
+<li><p>En los modelos semiparamétricos no se asume una forma funcional para la función de riesgo base.</p></li>
+<li><p>Para el modelo se usan particiones del tiempo y por cada intervalo de tiempo <span class="math inline">\(t_j\)</span> se asume un riesgo constante <span class="math inline">\(\lambda_i, i = 1, \ldots, J\)</span>.</p></li>
+<li><p>Las particiones del tiempo se definieron en función de los cuantiles de los tiempos no censurados, definiendo 9 intervalos de tiempo:</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top" data-quarto-postprocess="true" style="width: auto !important;  margin-left: auto; margin-right: auto;">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;"></th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">t_ 1</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">t_ 2</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">t_ 3</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">t_ 4</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">t_ 5</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">t_ 6</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">t_ 7</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">t_ 8</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">t_ 9</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Intervalo de Tiempo</td>
+<td style="text-align: left; width: 2cm;">(0,3]</td>
+<td style="text-align: left;">(3,5]</td>
+<td style="text-align: left;">(5,7]</td>
+<td style="text-align: left;">(7,9]</td>
+<td style="text-align: left;">(9,11]</td>
+<td style="text-align: left;">(11,13]</td>
+<td style="text-align: left;">(13,16]</td>
+<td style="text-align: left;">(16,21]</td>
+<td style="text-align: left;">(21, 364]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">Frec. Eventos</td>
+<td style="text-align: left; width: 2cm;">111</td>
+<td style="text-align: left;">96</td>
+<td style="text-align: left;">125</td>
+<td style="text-align: left;">101</td>
+<td style="text-align: left;">98</td>
+<td style="text-align: left;">88</td>
+<td style="text-align: left;">98</td>
+<td style="text-align: left;">94</td>
+<td style="text-align: left;">95</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<ul>
+<li>Podemos asumir que los riesgos estan correalcionados o no, dado que un modelo que asume correlación contiene al otro como un caso especial, asumiremos que se correlacionan.</li>
+</ul>
+</div>
+</section>
+<section id="modelo-semiparamétrico-1" class="slide level2 smaller">
+<h2>Modelo Semiparamétrico</h2>
+<ul>
+<li class="fragment"><p>El modelo semiparamétrico se define como: <span class="math display">\[
+h(t_j|x) = \lambda_j \exp(x^t\beta), \quad j = 1, \ldots, J.
+\]</span></p></li>
+<li class="fragment"><p>Su función de verosimilitud se define como: <span class="math display">\[
+\mathcal{L}(\lambda, \beta | t, x) = \prod_{i=1}^n \left[ \prod_{j=1}^J \left( \lambda_j \exp(x_i^t\beta) \right) ^{\delta_{ij}}  \right] \exp \left( - \sum_{j = 1}^{J_i} \lambda_i  t_{ij} \exp (x_i^T \beta) \right).
+\]</span> Donde <span class="math inline">\(J_i\)</span> es el último intervalo del individuo en riesgo, <span class="math inline">\(t_{ij} = \min (t_i, s_j) - s_{j-1}\)</span> es el tiempo en el intervalo <span class="math inline">\(j\)</span> y <span class="math inline">\(\delta_{ij}\)</span> es un indicador de si el individuo <span class="math inline">\(i\)</span> fue censurado o no en el intervalo <span class="math inline">\(j\)</span>.</p></li>
+</ul>
+</section>
+<section id="modelo-semiparamétrico-2" class="slide level2 smaller">
+<h2>Modelo Semiparamétrico</h2>
+<ul>
+<li class="fragment"><p>Los priors son:</p>
+<ul>
+<li class="fragment"><span class="math inline">\(\beta \sim \mathcal{N}_n (0, \sigma^2 I_n),  \quad \sigma_\beta  =  3\)</span>.</li>
+<li class="fragment"><span class="math inline">\(\log (\lambda) \sim \mathcal{N}_J (0, \sigma_\lambda^2 L)\)</span></li>
+<li class="fragment"><span class="math inline">\(\sigma_\lambda^2 \sim \mathcal{G}amma(\alpha_\lambda, \beta_\lambda) \quad \alpha_\lambda = 1, \beta_\lambda = 1\)</span>.</li>
+<li class="fragment"><span class="math inline">\(L \sim \mathcal{L}\mathcal{K}\mathcal{J} (\eta) \quad \eta = 2\)</span>.</li>
+</ul></li>
+<li class="fragment"><p>Donde LJK es la distribución Lewandowski-Kurowicka-Joe con parametro <span class="math inline">\(\eta\)</span> que controla el tipo de matriz de correlación con mayor probabilidad <span class="citation" data-cites="lewandowski-2009">(<a href="#/section" role="doc-biblioref" onclick="">Lewandowski et&nbsp;al., 2009</a>)</span>.</p>
+<ul>
+<li class="fragment">Si <span class="math inline">\(\eta = 1\)</span> la distribución es uniforme sobre las matrices de correlación.</li>
+<li class="fragment">Si <span class="math inline">\(\eta &gt; 1\)</span> la densidad de probabilidad es mayor para matrices diagonales.</li>
+<li class="fragment">Si <span class="math inline">\(\eta &lt; 1\)</span> la densidad de probabilidad es mayor para matrices de correlación con elementos no diagonales.</li>
+</ul></li>
+</ul>
+</section>
+<section id="resultados-del-modelo-semiparamétrico" class="slide level2 smaller scrollable">
+<h2>Resultados del Modelo Semiparamétrico</h2>
+<div class="panel-tabset">
+<ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1">Cadenas <span class="math inline">\(\beta\)</span></a></li><li><a href="#tabset-5-2">Cadenas <span class="math inline">\(\lambda\)</span></a></li><li><a href="#tabset-5-3">Posteriores <span class="math inline">\(\beta\)</span></a></li><li><a href="#tabset-5-4">Posteriores <span class="math inline">\(\lambda\)</span></a></li><li><a href="#tabset-5-5">Posteriores <span class="math inline">\(L\)</span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1">
+<div id="fig-chainsbetas-semiparam" class="panel-tab quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-chainsbetas-semiparam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/semiparam_model_img/chains_beta.png" class="panel-tab" height="460">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chainsbetas-semiparam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;23: Cadenas para <span class="math inline">\(\beta\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-5-2">
+<div id="fig-chainslambda-semiparam" class="panel-tab quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-chainslambda-semiparam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/semiparam_model_img/hazard_base_constants_chains.png" class="panel-tab" height="460">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chainslambda-semiparam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;24: Cadenas para <span class="math inline">\(\lambda\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-5-3">
+<div id="fig-postbetas-semiparam" class="panel-tab quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-postbetas-semiparam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/semiparam_model_img/betas_posterior.png" class="panel-tab" height="460">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-postbetas-semiparam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;25: Posteriores Marginales para <span class="math inline">\(\beta\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-5-4">
+<div id="fig-postlambda-semiparam" class="panel-tab quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-postlambda-semiparam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/semiparam_model_img/posterior_haz_const.png" class="panel-tab" height="460">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-postlambda-semiparam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;26: Posteriores Marginales para <span class="math inline">\(\lambda\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-5-5">
+<div id="fig-postsigmalambda-semiparam" class="panel-tab quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-postsigmalambda-semiparam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/semiparam_model_img/post_corr_intervals.png" class="panel-tab" height="460">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-postsigmalambda-semiparam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;27: Posteriores Marginales para <span class="math inline">\(L\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="resultados-del-modelo-semiparamétrico-1" class="slide level2 smaller scrollable">
+<h2>Resultados del Modelo Semiparamétrico</h2>
+<div class="panel-tabset">
+<ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1">Correlación <span class="math inline">\(\lambda\)</span></a></li><li><a href="#tabset-6-2">Correlación <span class="math inline">\(\beta\)</span></a></li><li><a href="#tabset-6-3">Curva de Sobrevivencia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1">
+<div id="fig-corr-semiparam" class="panel-tab quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-corr-semiparam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/semiparam_model_img/corr_intervals_post_mean.png" class="panel-tab" height="460">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-corr-semiparam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;28: Correlación Esperada.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-6-2">
+<div id="fig-corrbetas-semiparam" class="panel-tab quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-corrbetas-semiparam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/semiparam_model_img/betas_corr_plot.jpg" class="panel-tab" height="460">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-corrbetas-semiparam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;29: Correlación Posterior.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-6-3">
+<div id="fig-surv-semiparam" class="panel-tab quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-surv-semiparam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/semiparam_model_img/curves_surv_post.png" class="panel-tab" height="460">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-surv-semiparam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;30: Curvas de Sobrevivencia Posteriores.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="comparación-de-modelos" class="slide level2 smaller scrollable">
+<h2>Comparación de Modelos</h2>
+<div class="panel-tabset">
+<ul id="tabset-7" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-7-1">LOO-CV</a></li><li><a href="#tabset-7-2">LOOIC</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1">
+<div>
+<ul>
+<li>La comparación de modelos se realizó utilizando la validación cruzada Leave-One-Out (LOO-CV) <span class="citation" data-cites="vehtari-2016 vehtari-2015">(<a href="#/section" role="doc-biblioref" onclick="">Vehtari et&nbsp;al., 2015</a>, <a href="#/section" role="doc-biblioref" onclick="">2016</a>)</span>.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top" data-quarto-postprocess="true" style="width: auto !important;  margin-left: auto; margin-right: auto; font-size: 24px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">Estadístico</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">Modelo Semiparamétrico</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">Modelo Weibull</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">Modelo Exponencial</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">elpd_diff</td>
+<td style="text-align: center;">0.00</td>
+<td style="text-align: left;">-630.24</td>
+<td style="text-align: left;">-1674.21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">se_diff</td>
+<td style="text-align: center;">0.00</td>
+<td style="text-align: left;">43.27</td>
+<td style="text-align: left;">61.50</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">elpd_loo</td>
+<td style="text-align: center;">-5248.71</td>
+<td style="text-align: left;">-5878.95</td>
+<td style="text-align: left;">-6922.92</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">se_elpd_loo</td>
+<td style="text-align: center;">135.60</td>
+<td style="text-align: left;">146.94</td>
+<td style="text-align: left;">171.81</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">p_loo</td>
+<td style="text-align: center;">23.66</td>
+<td style="text-align: left;">18.05</td>
+<td style="text-align: left;">24.64</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">se_p_loo</td>
+<td style="text-align: center;">0.63</td>
+<td style="text-align: left;">0.55</td>
+<td style="text-align: left;">0.83</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">looic</td>
+<td style="text-align: center;">10497.42</td>
+<td style="text-align: left;">11757.90</td>
+<td style="text-align: left;">13845.85</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">se_looic</td>
+<td style="text-align: center;">271.19</td>
+<td style="text-align: left;">293.88</td>
+<td style="text-align: left;">343.62</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-7-2">
+<div id="fig-LOO-CV-P" class="panel-tab quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-LOO-CV-P-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/looic_model_comapration.png" class="panel-tab" height="460">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-LOO-CV-P-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;31: LOOIC
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
 </section></section>
 <section>
 <section id="referencias" class="title-slide slide level1 smaller center">
@@ -783,6 +1389,9 @@ Gelman, A., Carlin, J. B., Stern, H. S., Dunson, D. B., Vehtari, A., &amp; Rubin
 </div>
 <div id="ref-ibrahim-2001" class="csl-entry" role="listitem">
 Ibrahim, J. G., Chen, M.-H., &amp; Sinha, D. (2001). <em><span>Bayesian survival Analysis</span></em>. Springer Science &amp; Business Media.
+</div>
+<div id="ref-lewandowski-2009" class="csl-entry" role="listitem">
+Lewandowski, D., Kurowicka, D., &amp; Joe, H. (2009). <span>Generating random correlation matrices based on vines and extended onion method</span>. <em>Journal of Multivariate Analysis</em>, <em>100</em>(9), 1989-2001. <a href="https://doi.org/10.1016/j.jmva.2009.04.008">https://doi.org/10.1016/j.jmva.2009.04.008</a>
 </div>
 <div id="ref-muse-2022" class="csl-entry" role="listitem">
 Muse, A. H., Ngesa, O., Mwalili, S., Alshanbari, H. M., &amp; El-Bagoury, A.-A. H. (2022). <span>A Flexible Bayesian Parametric Proportional Hazard Model: Simulation and Applications to Right-Censored Healthcare Data</span>. <em>Journal of Healthcare Engineering</em>, <em>2022</em>, 1-28. <a href="https://doi.org/10.1155/2022/2051642">https://doi.org/10.1155/2022/2051642</a>

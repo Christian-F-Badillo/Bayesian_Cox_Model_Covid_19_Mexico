@@ -181,7 +181,7 @@ semiparametric_model <- cmdstan_model("semiparametric_PH_model.stan",
 # Preparación de datos para el modelo
 
 # Definimos los cortes para el tiempo
-J <-9  # Número de intervalos deseado
+J <- 9  # Número de intervalos deseado
 cuts <- quantile(event_times, probs = seq(0, 1, length.out = J + 1)) %>% 
     unname()
 
