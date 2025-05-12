@@ -217,19 +217,25 @@ fit$save_object(file = "semiparametric_model_fit.rds")
 
 #---------------------------------------------------------------------------
 # Resumen de resultados
-fit$variable_skeleton()
+#fit <- readRDS("semiparametric_model_fit.rds")
 
 sum_draws <- fit$summary(
     variables = c(
         "beta",        # Coeficientes de las covariables (efectos proporcionales)
-        "lambda",      # Riesgo base por intervalo (transformed parameter)
-        "sigma",       # Desviación estándar de los log-lambdas
-        "log_lambda",  # Log-riesgo base por intervalo (parámetro original)
-        "Omega"        # Matriz de correlación completa (generated quantity)
+        "lambda"      # Riesgo base por intervalo (transformed parameter)
+        #"sigma",       # Desviación estándar de los log-lambdas
+        #"log_lambda"  # Log-riesgo base por intervalo (parámetro original)
+        #"Omega"        # Matriz de correlación completa (generated quantity)
     ),
     posterior::default_summary_measures(),
     default_convergence_measures(),
     extra_quantiles = ~posterior::quantile2(., probs = c(0.025, 0.975))
+)
+
+write.csv(
+    sum_draws,
+    file = "semiparametric_model_summary.csv",
+    row.names = FALSE
 )
 
 #----------------------------------------------------------------------------

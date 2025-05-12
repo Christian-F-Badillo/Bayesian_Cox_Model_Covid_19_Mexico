@@ -167,7 +167,7 @@ Christian F. Badillo H.
     </div>
 </div>
 
-  <p class="date">8 de mayo de 2025</p>
+  <p class="date">11 de mayo de 2025</p>
 </section>
 <section>
 <section id="introducción-a-estadística-bayesiana" class="title-slide slide level1 center">
@@ -439,291 +439,221 @@ Figura&nbsp;14: Estimador Kaplan-Meier por Contacto con Caso Confirmado
 <div id="tabset-2-1">
 <div class="cell">
 <div class="cell-output-display">
-<!-- preamble start -->
-
-    <script>
-
-      function styleCell_o3zdx2qq4eyparmf5axn(i, j, css_id) {
-          var table = document.getElementById("tinytable_o3zdx2qq4eyparmf5axn");
-          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
-          if (cell) {
-              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
-              cell.classList.add(css_id);
-          } else {
-              console.warn(`Cell at (${i}, ${j}) not found.`);
-          }
-      }
-      function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_o3zdx2qq4eyparmf5axn');
-        var newRow = table.insertRow(i);
-        var newCell = newRow.insertCell(0);
-        newCell.setAttribute("colspan", colspan);
-        // newCell.innerText = content;
-        // this may be unsafe, but innerText does not interpret <br>
-        newCell.innerHTML = content;
-      }
-      function spanCell_o3zdx2qq4eyparmf5axn(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_o3zdx2qq4eyparmf5axn");
-        const targetRow = table.rows[i];
-        const targetCell = targetRow.cells[j];
-        for (let r = 0; r < rowspan; r++) {
-          // Only start deleting cells to the right for the first row (r == 0)
-          if (r === 0) {
-            // Delete cells to the right of the target cell in the first row
-            for (let c = colspan - 1; c > 0; c--) {
-              if (table.rows[i + r].cells[j + c]) {
-                table.rows[i + r].deleteCell(j + c);
-              }
-            }
-          }
-          // For rows below the first, delete starting from the target column
-          if (r > 0) {
-            for (let c = colspan - 1; c >= 0; c--) {
-              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
-                table.rows[i + r].deleteCell(j);
-              }
-            }
-          }
-        }
-        // Set rowspan and colspan of the target cell
-        targetCell.rowSpan = rowspan;
-        targetCell.colSpan = colspan;
-      }
-      // tinytable span after
-      window.addEventListener('load', function () {
-          var cellsToStyle = [
-            // tinytable style arrays after
-          { positions: [ { i: 0, j: 2 }, { i: 0, j: 6 }, { i: 0, j: 4 }, { i: 0, j: 3 }, { i: 0, j: 5 },  ], css_id: 'tinytable_css_8r081k1hs9k8s32frr6q',}, 
-          { positions: [ { i: 20, j: 1 }, { i: 20, j: 2 }, { i: 20, j: 3 }, { i: 20, j: 5 }, { i: 20, j: 4 }, { i: 20, j: 6 },  ], css_id: 'tinytable_css_lbpsr6v7zwqh9z7akiiy',}, 
-          { positions: [ { i: 16, j: 2 }, { i: 16, j: 1 }, { i: 16, j: 3 }, { i: 16, j: 5 }, { i: 16, j: 4 }, { i: 16, j: 6 },  ], css_id: 'tinytable_css_6cam0wmeybmeb7czqcsr',}, 
-          { positions: [ { i: 3, j: 1 }, { i: 5, j: 1 }, { i: 7, j: 1 }, { i: 9, j: 1 }, { i: 6, j: 1 }, { i: 11, j: 1 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 14, j: 3 }, { i: 17, j: 1 }, { i: 18, j: 1 }, { i: 19, j: 1 }, { i: 18, j: 3 }, { i: 8, j: 1 }, { i: 18, j: 5 }, { i: 10, j: 1 }, { i: 3, j: 2 }, { i: 12, j: 1 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 7, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 10, j: 2 }, { i: 11, j: 2 }, { i: 12, j: 2 }, { i: 13, j: 2 }, { i: 14, j: 2 }, { i: 15, j: 2 }, { i: 14, j: 4 }, { i: 17, j: 2 }, { i: 18, j: 2 }, { i: 19, j: 2 }, { i: 18, j: 4 }, { i: 2, j: 1 }, { i: 18, j: 6 }, { i: 4, j: 1 }, { i: 3, j: 3 }, { i: 4, j: 3 }, { i: 5, j: 3 }, { i: 6, j: 3 }, { i: 7, j: 3 }, { i: 8, j: 3 }, { i: 9, j: 3 }, { i: 10, j: 3 }, { i: 11, j: 3 }, { i: 12, j: 3 }, { i: 13, j: 3 }, { i: 12, j: 5 }, { i: 15, j: 3 }, { i: 14, j: 5 }, { i: 17, j: 3 }, { i: 10, j: 4 }, { i: 19, j: 3 }, { i: 12, j: 4 }, { i: 2, j: 2 }, { i: 12, j: 6 }, { i: 4, j: 2 }, { i: 3, j: 4 }, { i: 4, j: 4 }, { i: 5, j: 4 }, { i: 6, j: 4 }, { i: 7, j: 4 }, { i: 8, j: 4 }, { i: 9, j: 4 }, { i: 2, j: 5 }, { i: 11, j: 4 }, { i: 4, j: 5 }, { i: 13, j: 4 }, { i: 6, j: 5 }, { i: 15, j: 4 }, { i: 14, j: 6 }, { i: 17, j: 4 }, { i: 10, j: 5 }, { i: 19, j: 4 }, { i: 4, j: 6 }, { i: 2, j: 3 }, { i: 6, j: 6 }, { i: 15, j: 5 }, { i: 3, j: 5 }, { i: 17, j: 5 }, { i: 5, j: 5 }, { i: 19, j: 5 }, { i: 7, j: 5 }, { i: 8, j: 5 }, { i: 9, j: 5 }, { i: 2, j: 6 }, { i: 11, j: 5 }, { i: 17, j: 6 }, { i: 13, j: 5 }, { i: 19, j: 6 }, { i: 7, j: 6 }, { i: 8, j: 6 }, { i: 9, j: 6 }, { i: 10, j: 6 }, { i: 11, j: 6 }, { i: 3, j: 6 }, { i: 2, j: 4 }, { i: 5, j: 6 }, { i: 15, j: 6 }, { i: 13, j: 6 },  ], css_id: 'tinytable_css_ll5clot5p1u7b4ox0nl5',}, 
-          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_6e89g68k11i0rlk80ft1',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 1, j: 3 }, { i: 1, j: 5 }, { i: 1, j: 4 }, { i: 1, j: 2 }, { i: 1, j: 6 },  ], css_id: 'tinytable_css_jtqdunr9iqxpv28wfobj',}, 
-          { positions: [ { i: 20, j: 0 },  ], css_id: 'tinytable_css_pyhzbw46sg9xkc6bdjyt',}, 
-          { positions: [ { i: 16, j: 0 },  ], css_id: 'tinytable_css_0dxyunzxxqplp0rah8bm',}, 
-          { positions: [ { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 17, j: 0 }, { i: 18, j: 0 }, { i: 19, j: 0 },  ], css_id: 'tinytable_css_p1rw99s7f9cbicm7xwym',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_nvnycsjmbpxn99khqlcg',}, 
-          { positions: [ { i: 1, j: 0 },  ], css_id: 'tinytable_css_lv14vmp7fosv0i2nspst',}, 
-          ];
-
-          // Loop over the arrays to style the cells
-          cellsToStyle.forEach(function (group) {
-              group.positions.forEach(function (cell) {
-                  styleCell_o3zdx2qq4eyparmf5axn(cell.i, cell.j, group.css_id);
-              });
-          });
-      });
-    </script>
-
-    <style>
-      /* tinytable css entries after */
-      .table td.tinytable_css_8r081k1hs9k8s32frr6q, .table th.tinytable_css_8r081k1hs9k8s32frr6q { text-align: center; text-align: center; border-top: solid #d3d8dc 0.1em; text-align: center; }
-      .table td.tinytable_css_lbpsr6v7zwqh9z7akiiy, .table th.tinytable_css_lbpsr6v7zwqh9z7akiiy { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_6cam0wmeybmeb7czqcsr, .table th.tinytable_css_6cam0wmeybmeb7czqcsr { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_ll5clot5p1u7b4ox0nl5, .table th.tinytable_css_ll5clot5p1u7b4ox0nl5 { text-align: center; }
-      .table td.tinytable_css_6e89g68k11i0rlk80ft1, .table th.tinytable_css_6e89g68k11i0rlk80ft1 { text-align: center; text-align: center; border-top: solid #d3d8dc 0.1em; text-align: center; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_jtqdunr9iqxpv28wfobj, .table th.tinytable_css_jtqdunr9iqxpv28wfobj { text-align: center; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_pyhzbw46sg9xkc6bdjyt, .table th.tinytable_css_pyhzbw46sg9xkc6bdjyt { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_0dxyunzxxqplp0rah8bm, .table th.tinytable_css_0dxyunzxxqplp0rah8bm { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_p1rw99s7f9cbicm7xwym, .table th.tinytable_css_p1rw99s7f9cbicm7xwym { text-align: left; }
-      .table td.tinytable_css_nvnycsjmbpxn99khqlcg, .table th.tinytable_css_nvnycsjmbpxn99khqlcg { text-align: left; text-align: center; border-top: solid #d3d8dc 0.1em; text-align: center; }
-      .table td.tinytable_css_lv14vmp7fosv0i2nspst, .table th.tinytable_css_lv14vmp7fosv0i2nspst { text-align: left; border-bottom: solid #d3d8dc 0.05em; }
-    </style>
-    <div class="container">
-      <table class="table table-borderless" id="tinytable_o3zdx2qq4eyparmf5axn" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
-        <thead>
-<tr>
-<th scope="col" align="center" colspan="1"> </th>
-<th scope="col" align="center" colspan="6">Modelo de Cox</th>
+<table class="table caption-top" data-quarto-postprocess="true" style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto; width: auto !important;  font-size: 18px; margin-left: auto; margin-right: auto;">
+<caption>Estimaciones de la Razón de Riesgo del Modelo de Cox</caption>
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; empty-cells: hide; border-bottom: hidden;"></th>
+<th colspan="6" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Modelo de Cox
+</div></th>
 </tr>
-        
-              <tr>
-                <th scope="col"> </th>
-                <th scope="col">Est.</th>
-                <th scope="col">2.5 %</th>
-                <th scope="col">97.5 %</th>
-                <th scope="col">S.E.</th>
-                <th scope="col">t</th>
-                <th scope="col">p</th>
-              </tr>
-        </thead>
-        <tfoot><tr><td colspan="7">+ p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td></tr></tfoot>
-        <tbody>
-                <tr>
-                  <td>sexo1</td>
-                  <td>0.920</td>
-                  <td>0.805</td>
-                  <td>1.051</td>
-                  <td>0.063</td>
-                  <td>-1.224</td>
-                  <td>0.2210</td>
-                </tr>
-                <tr>
-                  <td>intubado1</td>
-                  <td>1.225*</td>
-                  <td>1.010</td>
-                  <td>1.487</td>
-                  <td>0.121</td>
-                  <td>2.057</td>
-                  <td>0.0397</td>
-                </tr>
-                <tr>
-                  <td>neumonia1</td>
-                  <td>0.532***</td>
-                  <td>0.463</td>
-                  <td>0.611</td>
-                  <td>0.038</td>
-                  <td>-8.927</td>
-                  <td>&lt;1e-04</td>
-                </tr>
-                <tr>
-                  <td>edad</td>
-                  <td>1.036***</td>
-                  <td>1.032</td>
-                  <td>1.040</td>
-                  <td>0.002</td>
-                  <td>18.142</td>
-                  <td>&lt;1e-04</td>
-                </tr>
-                <tr>
-                  <td>diabetes1</td>
-                  <td>0.951</td>
-                  <td>0.819</td>
-                  <td>1.104</td>
-                  <td>0.072</td>
-                  <td>-0.662</td>
-                  <td>0.5081</td>
-                </tr>
-                <tr>
-                  <td>epoc1</td>
-                  <td>1.018</td>
-                  <td>0.783</td>
-                  <td>1.324</td>
-                  <td>0.136</td>
-                  <td>0.132</td>
-                  <td>0.8953</td>
-                </tr>
-                <tr>
-                  <td>asma1</td>
-                  <td>1.135</td>
-                  <td>0.640</td>
-                  <td>2.014</td>
-                  <td>0.332</td>
-                  <td>0.433</td>
-                  <td>0.6650</td>
-                </tr>
-                <tr>
-                  <td>inmusupr1</td>
-                  <td>0.806</td>
-                  <td>0.593</td>
-                  <td>1.097</td>
-                  <td>0.127</td>
-                  <td>-1.370</td>
-                  <td>0.1706</td>
-                </tr>
-                <tr>
-                  <td>hipertension1</td>
-                  <td>0.894</td>
-                  <td>0.770</td>
-                  <td>1.037</td>
-                  <td>0.068</td>
-                  <td>-1.478</td>
-                  <td>0.1395</td>
-                </tr>
-                <tr>
-                  <td>otra_com1</td>
-                  <td>0.817</td>
-                  <td>0.638</td>
-                  <td>1.046</td>
-                  <td>0.103</td>
-                  <td>-1.605</td>
-                  <td>0.1084</td>
-                </tr>
-                <tr>
-                  <td>cardiovascular1</td>
-                  <td>1.366*</td>
-                  <td>1.059</td>
-                  <td>1.763</td>
-                  <td>0.178</td>
-                  <td>2.399</td>
-                  <td>0.0164</td>
-                </tr>
-                <tr>
-                  <td>obesidad1</td>
-                  <td>0.921</td>
-                  <td>0.743</td>
-                  <td>1.141</td>
-                  <td>0.101</td>
-                  <td>-0.757</td>
-                  <td>0.4489</td>
-                </tr>
-                <tr>
-                  <td>renal_cronica1</td>
-                  <td>0.640***</td>
-                  <td>0.525</td>
-                  <td>0.780</td>
-                  <td>0.065</td>
-                  <td>-4.417</td>
-                  <td>&lt;1e-04</td>
-                </tr>
-                <tr>
-                  <td>tabaquismo1</td>
-                  <td>1.339*</td>
-                  <td>1.007</td>
-                  <td>1.779</td>
-                  <td>0.194</td>
-                  <td>2.010</td>
-                  <td>0.0445</td>
-                </tr>
-                <tr>
-                  <td>otro_caso1</td>
-                  <td>1.403***</td>
-                  <td>1.170</td>
-                  <td>1.681</td>
-                  <td>0.130</td>
-                  <td>3.663</td>
-                  <td>0.0002</td>
-                </tr>
-                <tr>
-                  <td>Num.Obs.</td>
-                  <td>4449</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>AIC</td>
-                  <td>14621.7</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>BIC</td>
-                  <td>14717.7</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>RMSE</td>
-                  <td>0.46</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-        </tbody>
-      </table>
-    </div>
-<!-- hack to avoid NA insertion in last line -->
+<tr class="even">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;"></th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">Est.</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">2.5 %</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">97.5 %</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">S.E.</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">t</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">sexo1</td>
+<td style="text-align: center; width: 1cm;">0.920</td>
+<td style="text-align: center; width: 1cm;">0.805</td>
+<td style="text-align: center; width: 1cm;">1.051</td>
+<td style="text-align: center; width: 1cm;">0.063</td>
+<td style="text-align: center; width: 1cm;">-1.224</td>
+<td style="text-align: center; width: 1cm;">0.2210</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">intubado1</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">1.225*</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">1.010</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">1.487</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">0.121</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">2.057</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">0.0397</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">neumonia1</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">0.532***</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">0.463</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">0.611</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">0.038</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">-8.927</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">&amp;lt;1e-04</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">edad</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">1.036***</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">1.032</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">1.040</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">0.002</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">18.142</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">&amp;lt;1e-04</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">diabetes1</td>
+<td style="text-align: center; width: 1cm;">0.951</td>
+<td style="text-align: center; width: 1cm;">0.819</td>
+<td style="text-align: center; width: 1cm;">1.104</td>
+<td style="text-align: center; width: 1cm;">0.072</td>
+<td style="text-align: center; width: 1cm;">-0.662</td>
+<td style="text-align: center; width: 1cm;">0.5081</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">epoc1</td>
+<td style="text-align: center; width: 1cm;">1.018</td>
+<td style="text-align: center; width: 1cm;">0.783</td>
+<td style="text-align: center; width: 1cm;">1.324</td>
+<td style="text-align: center; width: 1cm;">0.136</td>
+<td style="text-align: center; width: 1cm;">0.132</td>
+<td style="text-align: center; width: 1cm;">0.8953</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">asma1</td>
+<td style="text-align: center; width: 1cm;">1.135</td>
+<td style="text-align: center; width: 1cm;">0.640</td>
+<td style="text-align: center; width: 1cm;">2.014</td>
+<td style="text-align: center; width: 1cm;">0.332</td>
+<td style="text-align: center; width: 1cm;">0.433</td>
+<td style="text-align: center; width: 1cm;">0.6650</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">inmusupr1</td>
+<td style="text-align: center; width: 1cm;">0.806</td>
+<td style="text-align: center; width: 1cm;">0.593</td>
+<td style="text-align: center; width: 1cm;">1.097</td>
+<td style="text-align: center; width: 1cm;">0.127</td>
+<td style="text-align: center; width: 1cm;">-1.370</td>
+<td style="text-align: center; width: 1cm;">0.1706</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">hipertension1</td>
+<td style="text-align: center; width: 1cm;">0.894</td>
+<td style="text-align: center; width: 1cm;">0.770</td>
+<td style="text-align: center; width: 1cm;">1.037</td>
+<td style="text-align: center; width: 1cm;">0.068</td>
+<td style="text-align: center; width: 1cm;">-1.478</td>
+<td style="text-align: center; width: 1cm;">0.1395</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">otra_com1</td>
+<td style="text-align: center; width: 1cm;">0.817</td>
+<td style="text-align: center; width: 1cm;">0.638</td>
+<td style="text-align: center; width: 1cm;">1.046</td>
+<td style="text-align: center; width: 1cm;">0.103</td>
+<td style="text-align: center; width: 1cm;">-1.605</td>
+<td style="text-align: center; width: 1cm;">0.1084</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">cardiovascular1</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">1.366*</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">1.059</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">1.763</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">0.178</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">2.399</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">0.0164</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">obesidad1</td>
+<td style="text-align: center; width: 1cm;">0.921</td>
+<td style="text-align: center; width: 1cm;">0.743</td>
+<td style="text-align: center; width: 1cm;">1.141</td>
+<td style="text-align: center; width: 1cm;">0.101</td>
+<td style="text-align: center; width: 1cm;">-0.757</td>
+<td style="text-align: center; width: 1cm;">0.4489</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">renal_cronica1</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">0.640***</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">0.525</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">0.780</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">0.065</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">-4.417</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">&amp;lt;1e-04</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">tabaquismo1</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">1.339*</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">1.007</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">1.779</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">0.194</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">2.010</td>
+<td style="text-align: center; width: 1cm; background-color: rgba(195, 255, 255, 255) !important;">0.0445</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; box-shadow: 0px 1.5pxfont-weight;">otro_caso1</td>
+<td style="text-align: center; box-shadow: 0px 1.5pxwidth;">1.403***</td>
+<td style="text-align: center; box-shadow: 0px 1.5pxwidth;">1.170</td>
+<td style="text-align: center; box-shadow: 0px 1.5pxwidth;">1.681</td>
+<td style="text-align: center; box-shadow: 0px 1.5pxwidth;">0.130</td>
+<td style="text-align: center; box-shadow: 0px 1.5pxwidth;">3.663</td>
+<td style="text-align: center; box-shadow: 0px 1.5pxwidth;">0.0002</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">Num.Obs.</td>
+<td style="text-align: center; width: 1cm;">4449</td>
+<td style="text-align: center; width: 1cm;"></td>
+<td style="text-align: center; width: 1cm;"></td>
+<td style="text-align: center; width: 1cm;"></td>
+<td style="text-align: center; width: 1cm;"></td>
+<td style="text-align: center; width: 1cm;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">AIC</td>
+<td style="text-align: center; width: 1cm;">14621.7</td>
+<td style="text-align: center; width: 1cm;"></td>
+<td style="text-align: center; width: 1cm;"></td>
+<td style="text-align: center; width: 1cm;"></td>
+<td style="text-align: center; width: 1cm;"></td>
+<td style="text-align: center; width: 1cm;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">BIC</td>
+<td style="text-align: center; width: 1cm;">14717.7</td>
+<td style="text-align: center; width: 1cm;"></td>
+<td style="text-align: center; width: 1cm;"></td>
+<td style="text-align: center; width: 1cm;"></td>
+<td style="text-align: center; width: 1cm;"></td>
+<td style="text-align: center; width: 1cm;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">RMSE</td>
+<td style="text-align: center; width: 1cm;">0.46</td>
+<td style="text-align: center; width: 1cm;"></td>
+<td style="text-align: center; width: 1cm;"></td>
+<td style="text-align: center; width: 1cm;"></td>
+<td style="text-align: center; width: 1cm;"></td>
+<td style="text-align: center; width: 1cm;"></td>
+</tr>
+</tbody><tfoot>
+<tr class="odd">
+<td style="text-align: left; padding: 0;"><sup></sup> + p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+
 </div>
 </div>
 </div>
@@ -732,7 +662,7 @@ Figura&nbsp;14: Estimador Kaplan-Meier por Contacto con Caso Confirmado
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentación_files/figure-revealjs/unnamed-chunk-3-1.png" width="960"></p>
+<p><img data-src="presentación_files/figure-revealjs/unnamed-chunk-2-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -780,64 +710,17 @@ h(t|x) = \lambda \exp(x^t\beta)
 <section id="prior-de-lambda" class="slide level2">
 <h2>Prior de <span class="math inline">\(\lambda\)</span></h2>
 
-<img data-src="presentación_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
+<img data-src="presentación_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"></section>
 <section id="resultados-del-modelo-exponencial" class="slide level2 smaller scrollable">
 <h2>Resultados del Modelo Exponencial</h2>
 <div class="panel-tabset">
-<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Cadenas</a></li><li><a href="#tabset-3-2">Posteriores</a></li><li><a href="#tabset-3-3">Correlación</a></li><li><a href="#tabset-3-4">Curva de Sobrevivencia</a></li><li><a href="#tabset-3-5">Resumen</a></li></ul>
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Resumen</a></li><li><a href="#tabset-3-2">Cadenas</a></li><li><a href="#tabset-3-3">Posteriores</a></li><li><a href="#tabset-3-4">Correlación</a></li><li><a href="#tabset-3-5">Curva de Sobrevivencia</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1">
-<div id="fig-chains-exp" class="panel-tab quarto-float quarto-figure quarto-figure-center">
-<figure class="quarto-float quarto-float-fig">
-<div aria-describedby="fig-chains-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img data-src="img/exp_model_img/chains.png" class="panel-tab" height="450">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chains-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;15: Cadenas del Modelo Exponencial.
-</figcaption>
-</figure>
-</div>
-</div>
-<div id="tabset-3-2">
-<div id="fig-post-exp" class="panel-tab quarto-float quarto-figure quarto-figure-center">
-<figure class="quarto-float quarto-float-fig">
-<div aria-describedby="fig-post-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img data-src="img/exp_model_img/posterior_marginal.png" class="panel-tab" height="450">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-post-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;16: Posteriores Marginales del Modelo Exponencial.
-</figcaption>
-</figure>
-</div>
-</div>
-<div id="tabset-3-3">
-<div id="fig-cor-exp" class="panel-tab quarto-float quarto-figure quarto-figure-center">
-<figure class="quarto-float quarto-float-fig">
-<div aria-describedby="fig-cor-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img data-src="img/exp_model_img/param_corr.png" class="panel-tab" height="450">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cor-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;17: Correlación Posterior del Modelo Exponencial.
-</figcaption>
-</figure>
-</div>
-</div>
-<div id="tabset-3-4">
-<div id="fig-surv-exp" class="panel-tab quarto-float quarto-figure quarto-figure-center">
-<figure class="quarto-float quarto-float-fig">
-<div aria-describedby="fig-surv-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img data-src="img/exp_model_img/curves_surv_post.png" class="panel-tab" height="450">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-surv-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;18: Curvas de Sobrevivencia Posteriores del Modelo Exponencial.
-</figcaption>
-</figure>
-</div>
-</div>
-<div id="tabset-3-5">
 <div class="cell">
 <div class="cell-output-display">
 <table class="table caption-top" data-quarto-postprocess="true" style="width: auto !important;  margin-left: auto; margin-right: auto; font-size: 18px; margin-left: auto; margin-right: auto;">
+<caption>Estimaciones de la Razón de Riesgo del Modelo Exponencial</caption>
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">Variable</th>
@@ -984,6 +867,54 @@ Figura&nbsp;18: Curvas de Sobrevivencia Posteriores del Modelo Exponencial.
 </div>
 </div>
 </div>
+<div id="tabset-3-2">
+<div id="fig-chains-exp" class="panel-tab quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-chains-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/exp_model_img/chains.png" class="panel-tab" height="450">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chains-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;15: Cadenas del Modelo Exponencial.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-3-3">
+<div id="fig-post-exp" class="panel-tab quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-post-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/exp_model_img/posterior_marginal.png" class="panel-tab" height="450">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-post-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;16: Posteriores Marginales del Modelo Exponencial.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-3-4">
+<div id="fig-cor-exp" class="panel-tab quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-cor-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/exp_model_img/param_corr.png" class="panel-tab" height="450">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cor-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;17: Correlación Posterior del Modelo Exponencial.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-3-5">
+<div id="fig-surv-exp" class="panel-tab quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-surv-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="img/exp_model_img/curves_surv_post.png" class="panel-tab" height="450">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-surv-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;18: Curvas de Sobrevivencia Posteriores del Modelo Exponencial.
+</figcaption>
+</figure>
+</div>
+</div>
 </div>
 </div>
 </section>
@@ -1004,7 +935,8 @@ h(t|x) =
 <h2>Modelo Weibull</h2>
 <ul>
 <li class="fragment"><p>La verosimilitud del modelo Weibull se define como: <span class="math display">\[\begin{align*}
-\mathcal{L}(\alpha, \lambda, \beta | t, x) &amp;= \prod_{i=1}^n \left[ \alpha t_i^{\alpha - 1} \exp (\lambda + x_i^T \beta) \exp (- \exp (\lambda + x_i^T \beta) t_i^\alpha) \right] ^{\nu_i} \left[ \exp (-\exp(\lambda + x_i^T \beta) t_i^\alpha) \right] ^{1 - \nu_i} \\
+\mathcal{L}(\alpha, \lambda, \beta | t, x) &amp;= \prod_{i=1}^n \left[ \alpha t_i^{\alpha - 1} \exp (\lambda + x_i^T \beta) \exp (- \exp (\lambda + x_i^T \beta) t_i^\alpha) \right] ^{\nu_i} \\
+&amp;\times \left[ \exp (-\exp(\lambda + x_i^T \beta) t_i^\alpha) \right] ^{1 - \nu_i} \\
 &amp;= \alpha^{\sum_{i=1}^n \nu_i} \prod_{i=1}^n \left( t_i^{\nu_i (\alpha- 1)} \right) \exp \left( \sum_{i=1}^n \nu_i (\lambda + x_i^T \beta) \right) \exp \left( -\sum_{i=1}^n t_i^\alpha \exp( \lambda + x_i^T \beta) \right) \\
 \end{align*}\]</span></p></li>
 <li class="fragment"><p>Nuestros priors son:</p>
@@ -1022,7 +954,163 @@ h(t|x) =
 <ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">Resumen</a></li><li><a href="#tabset-4-2">Cadenas</a></li><li><a href="#tabset-4-3">Posteriores</a></li><li><a href="#tabset-4-4">Correlación</a></li><li><a href="#tabset-4-5">Curva de Sobrevivencia</a></li></ul>
 <div class="tab-content">
 <div id="tabset-4-1">
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top" data-quarto-postprocess="true" style="width: auto !important;  margin-left: auto; margin-right: auto; font-size: 18px; margin-left: auto; margin-right: auto;">
+<caption>Estimaciones de la Razón de Riesgo del Modelo Weibull</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">Variable</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">Media</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">Mediana</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">HDI.Inf.</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">HDI.Sup.</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold; background-color: rgba(217, 234, 211, 255) !important;">Rhat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Sexo</td>
+<td style="text-align: right; width: 2cm;">0.9185136</td>
+<td style="text-align: right; width: 2cm;">0.9177703</td>
+<td style="text-align: right; width: 2cm;">0.8106025</td>
+<td style="text-align: right; width: 2cm;">1.0478212</td>
+<td style="text-align: right; width: 2cm;">1.0017583</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">Intubado</td>
+<td style="text-align: right; width: 2cm;">1.1931639</td>
+<td style="text-align: right; width: 2cm;">1.1932408</td>
+<td style="text-align: right; width: 2cm;">0.9883733</td>
+<td style="text-align: right; width: 2cm;">1.4434484</td>
+<td style="text-align: right; width: 2cm;">1.0008044</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">Neumonia</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.5302770</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.5312213</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.4624272</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.6074941</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.9994686</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">Edad</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0373007</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0372908</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0335076</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0413108</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.9996429</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Diabetes</td>
+<td style="text-align: right; width: 2cm;">0.9486640</td>
+<td style="text-align: right; width: 2cm;">0.9489407</td>
+<td style="text-align: right; width: 2cm;">0.8165011</td>
+<td style="text-align: right; width: 2cm;">1.1060155</td>
+<td style="text-align: right; width: 2cm;">1.0013379</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">EPOC</td>
+<td style="text-align: right; width: 2cm;">1.0035495</td>
+<td style="text-align: right; width: 2cm;">1.0007255</td>
+<td style="text-align: right; width: 2cm;">0.7808306</td>
+<td style="text-align: right; width: 2cm;">1.3081796</td>
+<td style="text-align: right; width: 2cm;">1.0011197</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Asma</td>
+<td style="text-align: right; width: 2cm;">1.0477915</td>
+<td style="text-align: right; width: 2cm;">1.0342772</td>
+<td style="text-align: right; width: 2cm;">0.6280500</td>
+<td style="text-align: right; width: 2cm;">1.8566070</td>
+<td style="text-align: right; width: 2cm;">1.0007485</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">Inmunodef.</td>
+<td style="text-align: right; width: 2cm;">0.7489678</td>
+<td style="text-align: right; width: 2cm;">0.7456175</td>
+<td style="text-align: right; width: 2cm;">0.5584637</td>
+<td style="text-align: right; width: 2cm;">1.0248751</td>
+<td style="text-align: right; width: 2cm;">1.0019450</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold;">Hipertensión</td>
+<td style="text-align: right; width: 2cm;">0.8876106</td>
+<td style="text-align: right; width: 2cm;">0.8877594</td>
+<td style="text-align: right; width: 2cm;">0.7655532</td>
+<td style="text-align: right; width: 2cm;">1.0313633</td>
+<td style="text-align: right; width: 2cm;">1.0026106</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">Otra.Comorb.</td>
+<td style="text-align: right; width: 2cm;">0.7872708</td>
+<td style="text-align: right; width: 2cm;">0.7872401</td>
+<td style="text-align: right; width: 2cm;">0.6223303</td>
+<td style="text-align: right; width: 2cm;">1.0084833</td>
+<td style="text-align: right; width: 2cm;">0.9999893</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">Cardiovasc.</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.3427267</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.3374215</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0548531</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.7539938</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0004434</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold;">Obesidad</td>
+<td style="text-align: right; width: 2cm;">0.9101599</td>
+<td style="text-align: right; width: 2cm;">0.9109745</td>
+<td style="text-align: right; width: 2cm;">0.7360510</td>
+<td style="text-align: right; width: 2cm;">1.1280806</td>
+<td style="text-align: right; width: 2cm;">1.0023679</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">Renal.C.</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.6396789</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.6398874</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.5274773</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.7860376</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0031437</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">Tabaquismo</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.3399799</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.3331386</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0198368</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.7934904</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0004027</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">Otro.Caso</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.4177032</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.4144899</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.1879099</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.6984052</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0040929</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">gamma</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.0134526</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.0134648</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.0029451</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.0617570</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0003401</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: rgba(195, 255, 255, 255) !important;">alpha</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.3300295</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.3298140</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.3106628</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">0.3507002</td>
+<td style="text-align: right; width: 2cm; background-color: rgba(195, 255, 255, 255) !important;">1.0001530</td>
+</tr>
+</tbody>
+</table>
 
+
+</div>
+</div>
 </div>
 <div id="tabset-4-2">
 <div id="fig-chains-weibull" class="panel-tab quarto-float quarto-figure quarto-figure-center">

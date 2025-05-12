@@ -211,6 +211,8 @@ fit <- coxph(surv_model, data = data_ord)
 
 ```{r}
 #| echo: false
+#| tbl-cap: "Estimaciones de la Razón de Riesgo del Modelo de Cox"
+#| label: tab-cox-summary
 
 modelsummary(list( "Modelo de Cox" = fit),
              exponentiate = TRUE,
@@ -221,8 +223,14 @@ modelsummary(list( "Modelo de Cox" = fit),
                            "p.value"),
              stars = T,
              shape = term ~ model + statistic,
-             output = "html"
-)
+             output = "kableExtra"
+) %>%
+  kable_styling(full_width = F, position = "left") %>%
+  column_spec(1, bold = T) %>%
+  column_spec(2:7, width = "1cm") %>%
+  row_spec(0, bold = T, background = "#D9EAD3") %>%
+  row_spec(c(2,3, 4, 11, 13, 14, 15), background = "#C3FFFF") %>%
+  kable_styling(font_size = 18)
 ```
 
 ### Curva de Sobrevivencia 
@@ -304,26 +312,12 @@ ggplot(df, aes(x = x, y = y)) +
 ## Resultados del Modelo Exponencial {.smaller .scrollable}
 
 ::: {.panel-tabset}
-### Cadenas
-
-![Cadenas del Modelo Exponencial.](img/exp_model_img/chains.png){#fig-chains-exp .panel-tab height=450px}
-
-### Posteriores
-
-![Posteriores Marginales del Modelo Exponencial.](img/exp_model_img/posterior_marginal.png){#fig-post-exp .panel-tab height=450px}
-
-### Correlación
-
-![Correlación Posterior del Modelo Exponencial.](img/exp_model_img/param_corr.png){#fig-cor-exp .panel-tab height=450px}
-
-### Curva de Sobrevivencia
-
-![Curvas de Sobrevivencia Posteriores del Modelo Exponencial.](img/exp_model_img/curves_surv_post.png){#fig-surv-exp .panel-tab height=450px}
-
 ### Resumen 
 
 ```{r}
 #| echo: false
+#| tbl-cap: "Estimaciones de la Razón de Riesgo del Modelo Exponencial"
+#| label: tab-exp-summary
 
 library(knitr)
 library(kableExtra)
@@ -357,6 +351,24 @@ kable(exp_sum, format = "html",
   row_spec(c(2,3, 4, 8, 10, 11, 13, 14, 15, 16), background = "#C3FFFF") %>%
   kable_styling(font_size = 18)
 ```
+
+
+### Cadenas
+
+![Cadenas del Modelo Exponencial.](img/exp_model_img/chains.png){#fig-chains-exp .panel-tab height=450px}
+
+### Posteriores
+
+![Posteriores Marginales del Modelo Exponencial.](img/exp_model_img/posterior_marginal.png){#fig-post-exp .panel-tab height=450px}
+
+### Correlación
+
+![Correlación Posterior del Modelo Exponencial.](img/exp_model_img/param_corr.png){#fig-cor-exp .panel-tab height=450px}
+
+### Curva de Sobrevivencia
+
+![Curvas de Sobrevivencia Posteriores del Modelo Exponencial.](img/exp_model_img/curves_surv_post.png){#fig-surv-exp .panel-tab height=450px}
+
 :::
 
 
@@ -378,7 +390,8 @@ $$
 
 - La verosimilitud del modelo Weibull se define como:
 \begin{align*}
-\mathcal{L}(\alpha, \lambda, \beta | t, x) &= \prod_{i=1}^n \left[ \alpha t_i^{\alpha - 1} \exp (\lambda + x_i^T \beta) \exp (- \exp (\lambda + x_i^T \beta) t_i^\alpha) \right] ^{\nu_i} \left[ \exp (-\exp(\lambda + x_i^T \beta) t_i^\alpha) \right] ^{1 - \nu_i} \\
+\mathcal{L}(\alpha, \lambda, \beta | t, x) &= \prod_{i=1}^n \left[ \alpha t_i^{\alpha - 1} \exp (\lambda + x_i^T \beta) \exp (- \exp (\lambda + x_i^T \beta) t_i^\alpha) \right] ^{\nu_i} \\
+&\times \left[ \exp (-\exp(\lambda + x_i^T \beta) t_i^\alpha) \right] ^{1 - \nu_i} \\
 &= \alpha^{\sum_{i=1}^n \nu_i} \prod_{i=1}^n \left( t_i^{\nu_i (\alpha- 1)} \right) \exp \left( \sum_{i=1}^n \nu_i (\lambda + x_i^T \beta) \right) \exp \left( -\sum_{i=1}^n t_i^\alpha \exp( \lambda + x_i^T \beta) \right) \\
 \end{align*}
 
@@ -393,6 +406,41 @@ $$
 ::: {.panel-tabset}
 
 ### Resumen
+
+```{r}
+#| echo: false
+#| tbl-cap: "Estimaciones de la Razón de Riesgo del Modelo Weibull"
+#| label: tab-weibull-summary
+
+sum_weibull_model <- read.csv("https://raw.githubusercontent.com/Christian-F-Badillo/Bayesian_Cox_Model_Covid_19_Mexico/refs/heads/master/summary_weibull_PH_model.csv")
+
+sum_weibull_model <- sum_weibull_model %>%
+  select(-X) %>%
+  mutate(variable = c(betas_names, "gamma", "alpha")) %>%
+  select(variable, mean, median, q2.75, q97.5, rhat) %>%
+  mutate(mean = exp(mean),
+         median = exp(median),
+         q2.75 = exp(q2.75),
+         q97.5 = exp(q97.5)) %>%
+  #Calculamos el logaritmo de alpha para no modificar su escala
+  mutate(mean = ifelse(variable == "alpha", log(mean), mean),
+         median = ifelse(variable == "alpha", log(median), median),
+         q2.75 = ifelse(variable == "alpha", log(q2.75), q2.75),
+         q97.5 = ifelse(variable == "alpha", log(q97.5), q97.5))
+
+kable(sum_weibull_model, format = "html",
+      col.names = c("Variable", "Media", "Mediana",
+                    "HDI.Inf.", "HDI.Sup.", "Rhat"),
+      escape = F, digits = 7) %>%
+  kable_styling(full_width = F, position = "left") %>%
+  column_spec(1, bold = T) %>%
+  column_spec(2:6, width = "2cm") %>%
+  kable_styling(latex_options = c("striped", "hold_position")) %>%
+  row_spec(0, bold = T, background = "#D9EAD3") %>%
+  row_spec(c(3,4, 11, 13, 14, 15, 16, 17), background = "#C3FFFF") %>%
+  kable_styling(font_size = 18)
+```
+
 
 ### Cadenas
 
