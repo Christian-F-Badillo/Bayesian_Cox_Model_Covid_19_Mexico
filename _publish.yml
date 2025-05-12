@@ -1,0 +1,4 @@
+- source: presentación.qmd
+  quarto-pub:
+    - id: b639511b-cb93-469b-b8e4-b43b26341a9e
+      url: https://christian-badillo.quarto.pub/sobrevivencia
