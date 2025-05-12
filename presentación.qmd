@@ -34,7 +34,17 @@ execute:
   freeze: auto 
 ---
 
-# Introducción a Estadística Bayesiana 
+# Estadística Bayesiana
+
+```{css}
+.center h1 {
+  text-align: center;
+}
+```
+
+<center>
+![](img/mem1.jpg){width=50%}
+</center>
 
 ## Idea 
 - La estadística bayesiana es un enfoque de la estadística que utiliza el teorema de Bayes para actualizar la probabilidad de una hipótesis a medida que se dispone de nueva evidencia.
@@ -78,6 +88,12 @@ $$
   - JAGS ({{< fa brands r-project >}}, {{< fa brands windows >}}, {{< fa brands apple >}}).
 
 - **Stan** (Sampling through adaptive neighborhoods) es el software más utilizado en la actualidad dada su flexibilidad para implementar modelos complejos y su eficiencia con el uso de variantes de MCMC como ***HMC*** (Hamiltonian Monte Carlo) y ***NUTS*** (No-U-Turn Sampler) que permiten explorar el espacio de parámetros de manera más eficiente que los métodos tradicionales como el Metropolis-Hastings o Gibbs Sampling [@stan2024]. 
+
+##
+
+<center>
+![](img/mem2.jpg){width=60%}
+</center>
 
 # Metodología
 
@@ -551,6 +567,37 @@ Donde $J_i$ es el último intervalo del individuo en riesgo, $t_{ij} = \min (t_i
 ## Resultados del Modelo Semiparamétrico {.smaller .scrollable}
 ::: {.panel-tabset}
 
+### Resumen
+
+```{r}
+#| echo: false
+#| tbl-cap: "Estimaciones de la Razón de Riesgo del Modelo Semiparamétrico"
+#| label: tab-semiparam-summary
+
+semiparam_sum <- read.csv("https://raw.githubusercontent.com/Christian-F-Badillo/Bayesian_Cox_Model_Covid_19_Mexico/refs/heads/master/semiparametric_model_summary.csv")
+
+semiparam_sum <- semiparam_sum %>%
+  mutate(variable = c(betas_names, "lambda_1", "lambda_2", "lambda_3", "lambda_4", "lambda_5", "lambda_6", "lambda_7", "lambda_8", "lambda_9")) %>%
+  select(variable, mean, median, q2.5, q97.5, rhat) %>%
+  # Exponenciamos las primeras 15 filas y las columnas necesarias
+  mutate(mean = ifelse(variable %in% betas_names, exp(mean), mean),
+         median = ifelse(variable %in% betas_names, exp(median), median),
+         q2.5 = ifelse(variable %in% betas_names, exp(q2.5), q2.5),
+         q97.5 = ifelse(variable %in% betas_names, exp(q97.5), q97.5))
+
+kable(semiparam_sum, format = "html",
+      col.names = c("Variable", "Media", "Mediana",
+                    "HDI.Inf.", "HDI.Sup.", "Rhat"),
+      escape = F, digits = 7) %>%
+  kable_styling(full_width = F, position = "left") %>%
+  column_spec(1, bold = T) %>%
+  column_spec(2:6, width = "2cm") %>%
+  kable_styling(latex_options = c("striped", "hold_position")) %>%
+  row_spec(0, bold = T, background = "#D9EAD3") %>%
+  row_spec(c(3, 4, 8, 10, 11, 13, 15:24), background = "#C3FFFF") %>%
+  kable_styling(font_size = 18)
+```
+
 ### Correlación $\lambda$
 
 ![Correlación Esperada.](img/semiparam_model_img/corr_intervals_post_mean.png){#fig-corr-semiparam .panel-tab height=460px}
@@ -582,9 +629,16 @@ model_comparation <- read.csv("https://raw.githubusercontent.com/Christian-F-Bad
 model_comparation <- model_comparation %>%
   select(-X)
 
+cox = c(NaN, NaN, NaN, NaN, NaN, NaN,  14621.7, NaN)
+
+model_comparation <- model_comparation %>%
+  rbind(cox)
+
+options(knitr.kable.NA = '-')
+
 kable(t(model_comparation), format = "html",
-      col.names = c("Estadístico", "Modelo Semiparamétrico", "Modelo Weibull", "Modelo Exponencial"),
-      align = "clll",
+      col.names = c("Estadístico", "Modelo Semiparamétrico", "Modelo Weibull", "Modelo Exponencial", "Modelo de Cox"),
+      align = "cccc",
       escape = F, digits = 2) %>%
   kable_styling(full_width = F, position = "left") %>%
   column_spec(1, bold = T) %>%
@@ -601,7 +655,30 @@ kable(t(model_comparation), format = "html",
 
 ::::
 
+## Conclusiones {.smaller}
 
+- El modelo semiparamétrico es el que tiene el mejor ajuste a los datos, a pesar de su complejidad.
+
+- Dado el modelo semiparamétrico la neumonía (`r round((1 - 0.5385683) * 100, 2)`%), inmunodeficiencia (`r round((1 - 0.7510827) * 100, 2)`%), tener alguna otra comorbilidad (`r round((1 - 0.7751087) * 100, 2)`%) o una enfermedad renal crónica (`r round((1 - 0.6304594) * 100, 2)`%) **disminuyen** el riesgo de muerte. 
+
+- Mientras que tener contacto con otra persona con la enfermedad (`r round((1.3753882 - 1) * 100, 2)`%), una enfermedad cardiovascular (`r round((1.3116980 - 1) * 100, 2)`%) y la edad (`r round((1.0356018 - 1) * 100, 2)`%) **aumentan** el riesgo de muerte.
+
+- Estos resultados no tiene una validez muy alta dado que los datos son de una muestra pequeña que se estratifico por la presencia del evento y otras variables, pudiendo introducir sesgos en la estimación de los parámetros.
+
+- A pesar de ello, ejemplifica la importancia de la modelación bayesiana en el área de análisis de sobrevivencia, dado que permite la inclusión de  informativos previa y el  uso modelos complejos y flexibles.
+
+
+## Gracias por su atención :D {.smaller}
+
+```{css}
+.center h2 {
+  text-align: center;
+}
+```
+
+<center>
+![](img/mem3.jpg){width=80%}
+</center>
 
 
 # Referencias {.smaller}
